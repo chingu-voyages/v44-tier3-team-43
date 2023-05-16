@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
 import "@/styles/globals.css";
 import twclsx from "@/utils/twclsx";
 import { Inter } from "next/font/google";
@@ -13,11 +15,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
 	<html lang="en">
 		<body
 			className={twclsx(
-				"min-h-screen bg-custom-black text-custom-white",
+				"min-h-screen flex flex-col bg-custom-black text-custom-white",
 				inter.className
 			)}
 		>
-			{children}
+			<Header />
+			<main className="flex-1">{children}</main>
+			<Footer />
 		</body>
 	</html>
 );

@@ -14,8 +14,9 @@ const Search = () => {
 	return (
 		<form
 			className={clsx(
-				"px-3 py-2 max-w-[28rem] lg:max-w-[14rem] w-full flex justify-between items-center gap-1 bg-dark-grey rounded-xl",
-				"ring-1 ring-transparent focus-within:ring-custom-green transition duration-200 overflow-hidden"
+				"px-2.5 py-1 lg:px-3 lg:py-1.5 max-w-[28rem] lg:max-w-[14rem] w-full flex justify-between items-center gap-1",
+				"rounded-xl bg-dark-grey ring-1 ring-transparent focus-within:ring-custom-green transition duration-200",
+				"text-sm lg:text-base overflow-hidden"
 			)}
 			onSubmit={handleSubmit}
 		>
@@ -30,9 +31,9 @@ const Search = () => {
 					"focus-visible:ring-0 text-light-grey transition duration-200",
 					"hover:opacity-80 active:opacity-60"
 				)}
-                tabIndex={-1}
+				tabIndex={-1}
 			>
-				<AiOutlineSearch className="w-5 h-5" />
+				<AiOutlineSearch className="w-4 h-4 lg:w-5 lg:h-5" />
 			</button>
 		</form>
 	);

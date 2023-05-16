@@ -17,10 +17,10 @@ import { BsChevronLeft } from "react-icons/bs";
 import clsx from "clsx";
 
 const MobileMenu = () => (
-	<nav className="block lg:hidden">
+	<nav className="flex items-center lg:hidden">
 		<DropdownRoot modal={false}>
 			<DropdownTrigger className="text-light-grey hover:text-light-grey">
-				<HiMenuAlt3 className="w-7 h-7" />
+				<HiMenuAlt3 className="w-6 h-6" />
 			</DropdownTrigger>
 			<DropdownContent
 				className="py-6 pl-8 pr-6 gap-y-4 max-w-[20rem] w-full"
@@ -39,7 +39,7 @@ const MobileMenu = () => (
 					</DropdownItem>
 				))}
 				<DropdownSub>
-					<DropdownSubTrigger className="pl-4 -ml-4">
+					<DropdownSubTrigger className="pl-4 -ml-4 text-sm">
 						<BsChevronLeft
 							className={clsx(
 								"absolute top-1/2 left-0 w-3 h-3 -translate-y-1/2 text-light-grey transition",
