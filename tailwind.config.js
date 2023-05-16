@@ -13,6 +13,9 @@ module.exports = {
 		container: {
 			center: true,
 			padding: "1.25rem",
+			screens: {
+				"2xl": "1280px"
+			}
 		},
 		extend: {
 			fontFamily: {
@@ -28,8 +31,18 @@ module.exports = {
 				"custom-green": "#177807",
 				"custom-blue": "#12506B",
 				"custom-orange": "#BC5D19"
+			},
+			keyframes: {
+				zoomIn: {
+					"0%": { transform: "scale(0.3)", opacity: "0.7" },
+					"70%": { transform: "scale(1.05)" },
+					"100%": { transform: "scale(1)", opacity: "1" }
+				}
+			},
+			animation: {
+				"zoom-in": "zoomIn 0.3s"
 			}
 		}
 	},
-	plugins: []
+	plugins: [require("tailwindcss-radix")()]
 };
