@@ -20,7 +20,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
 			)}
 		>
 			<Header />
-			<main className="flex-1">{children}</main>
+			<main className="mt-40 flex-1 container">{children}</main>
 			<Footer />
 		</body>
 	</html>

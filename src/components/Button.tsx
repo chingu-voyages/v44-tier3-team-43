@@ -33,15 +33,26 @@ interface IProps
 	extends ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonVariants> {
 	isLoading?: boolean;
+	showLoadingIcon?: boolean;
 }
 
-const Button = ({ className, children, isLoading, variant, size, ...props }: IProps) => (
+const Button = ({
+	className,
+	children,
+	isLoading,
+	showLoadingIcon = true,
+	variant,
+	size,
+	...props
+}: IProps) => (
 	<button
 		className={twclsx(buttonVariants({ variant, size, className }))}
 		disabled={isLoading}
 		{...props}
 	>
-        {isLoading ? <AiOutlineLoading3Quarters className="animate-spin" /> : null}
+		{isLoading && showLoadingIcon ? (
+			<AiOutlineLoading3Quarters className="animate-spin" />
+		) : null}
 		{children}
 	</button>
 );
