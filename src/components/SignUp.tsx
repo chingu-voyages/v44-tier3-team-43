@@ -1,10 +1,16 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import InputField from "@/components/InputField";
 import { emailFieldRules, passwordFieldRules, urlFieldRules } from "@/utils/validation";
 import Button from "@/components/Button";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 const SignUp = () => {
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const { control, handleSubmit, getValues } = useForm({
 		mode: "onTouched"
 	});
@@ -15,6 +21,18 @@ const SignUp = () => {
 		const { password } = getValues();
 
 		return (val && password === val) || "Passwords should match!";
+	};
+
+	const handleSignUpWithGoogle = async () => {
+		try {
+			setIsLoading(true);
+
+			await signIn("google");
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -29,7 +47,7 @@ const SignUp = () => {
 				placeholder="Name"
 				autoComplete="off"
 				type="text"
-				disabled={false}
+				disabled={isLoading}
 			/>
 			<InputField
 				className="mt-7"
@@ -39,7 +57,7 @@ const SignUp = () => {
 				placeholder="Photo URL (optional)"
 				autoComplete="off"
 				type="url"
-				disabled={false}
+				disabled={isLoading}
 			/>
 			<InputField
 				className="mt-7"
@@ -51,7 +69,7 @@ const SignUp = () => {
 				placeholder="E-mail"
 				autoComplete="off"
 				type="text"
-				disabled={false}
+				disabled={isLoading}
 			/>
 			<InputField
 				className="mt-7"
@@ -62,7 +80,7 @@ const SignUp = () => {
 				}}
 				placeholder="Password"
 				type="password"
-				disabled={false}
+				disabled={isLoading}
 			/>
 			<InputField
 				className="mt-7"
@@ -74,13 +92,17 @@ const SignUp = () => {
 				}}
 				placeholder="Repeat password"
 				type="password"
-				disabled={false}
+				disabled={isLoading}
 			/>
-			<Button className="mt-7">Sign up</Button>
+			<Button className="mt-7" isLoading={isLoading}>
+				Sign up
+			</Button>
 			<Button
 				className="mt-5"
 				variant="outline"
 				showLoadingIcon={false}
+				onClick={handleSignUpWithGoogle}
+				isLoading={isLoading}
 				type="button"
 			>
 				<FcGoogle />

@@ -1,15 +1,35 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import InputField from "@/components/InputField";
 import { emailFieldRules } from "@/utils/validation";
 import Button from "@/components/Button";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
 
 const SignIn = () => {
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
 	const { control, handleSubmit } = useForm({
 		mode: "onTouched"
 	});
 
-	const onSubmit = () => {};
+	const onSubmit = async () => {
+		await signIn("credentials");
+	};
+
+	const handleSignInWithGoogle = async () => {
+		try {
+			setIsLoading(true);
+
+			await signIn("google");
+		} catch (err) {
+			console.log(err);
+		} finally {
+			setIsLoading(false);
+		}
+	};
 
 	return (
 		<form className="flex flex-col" onSubmit={handleSubmit(onSubmit)}>
@@ -23,7 +43,7 @@ const SignIn = () => {
 				placeholder="E-mail"
 				autoComplete="off"
 				type="text"
-				disabled={false}
+				disabled={isLoading}
 			/>
 			<InputField
 				className="mt-7"
@@ -34,13 +54,17 @@ const SignIn = () => {
 				}}
 				placeholder="Password"
 				type="password"
-				disabled={false}
+				disabled={isLoading}
 			/>
-			<Button className="mt-7">Sign in</Button>
+			<Button className="mt-7" isLoading={isLoading}>
+				Sign in
+			</Button>
 			<Button
 				className="mt-5"
 				variant="outline"
 				showLoadingIcon={false}
+				onClick={handleSignInWithGoogle}
+				isLoading={isLoading}
 				type="button"
 			>
 				<FcGoogle />

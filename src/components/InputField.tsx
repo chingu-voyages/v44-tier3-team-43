@@ -32,6 +32,7 @@ const InputField = ({
 				className={clsx(
 					"w-full py-1 border-b placeholder:text-light-grey text-custom-white bg-transparent",
 					"focus:border-custom-green focus:ring-0 focus:placeholder:-translate-x-full placeholder:transition",
+					"disabled:opacity-40",
 					error ? "border-red-500" : "border-light-grey",
 					className
 				)}

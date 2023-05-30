@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
+import Providers from "@/components/Providers";
 import "@/styles/globals.css";
 import twclsx from "@/utils/twclsx";
 import { Inter } from "next/font/google";
@@ -19,9 +20,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => (
 				inter.className
 			)}
 		>
-			<Header />
-			<main className="mt-40 flex-1 container">{children}</main>
-			<Footer />
+			<Providers>
+				<Header />
+				<main className="mt-40 flex-1 container">{children}</main>
+				<Footer />
+			</Providers>
 		</body>
 	</html>
 );
