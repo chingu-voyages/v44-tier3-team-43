@@ -40,9 +40,6 @@ export const authOptions: NextAuthOptions = {
 		redirect() {
 			return "/";
 		}
-	},
-	pages: {
-		signIn: "/auth"
 	}
 };
 

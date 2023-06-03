@@ -1,13 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { buttonVariants } from "@/components/Button";
 import Search from "@/components/Search";
 import Categories from "@/components/Categories";
-import twclsx from "@/utils/twclsx";
 import MobileMenu from "@/components/MobileMenu";
 import clsx from "clsx";
 import { getUserSession } from "@/lib/auth";
 import User from "@/components/User";
+import GoogleButton from "@/components/GoogleButton";
 
 const Header = async () => {
 	const session = await getUserSession();
@@ -62,9 +61,7 @@ const Header = async () => {
 						{session ? (
 							<User name={session.user.name} image={session.user.image} />
 						) : (
-							<Link className={twclsx(buttonVariants())} href="/auth">
-								Sign in
-							</Link>
+							<GoogleButton />
 						)}
 					</div>
 					<MobileMenu />

@@ -12,17 +12,21 @@ import {
 } from "@/components/Dropdown";
 import Link from "next/link";
 import { HiMenuAlt3 } from "react-icons/hi";
-import Button, { buttonVariants } from "@/components/Button";
+import Button from "@/components/Button";
 import { BsChevronLeft } from "react-icons/bs";
 import clsx from "clsx";
-import { DropdownMenuItem } from "@radix-ui/react-dropdown-menu";
-import { signOut, useSession } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import GoogleButton from "./GoogleButton";
 
 const MobileMenu = () => {
 	const { data: session } = useSession();
 
 	const handleSignOut = async () => {
 		await signOut();
+	};
+
+	const signInWithGoogle = async () => {
+		await signIn("google");
 	};
 
 	return (
@@ -94,11 +98,7 @@ const MobileMenu = () => {
 							Sign out
 						</Button>
 					) : (
-						<DropdownMenuItem asChild>
-							<Link className={buttonVariants({ size: "sm" })} href="/auth">
-								Sign in
-							</Link>
-						</DropdownMenuItem>
+						<GoogleButton size="sm">Sign in</GoogleButton>
 					)}
 				</DropdownContent>
 			</DropdownRoot>
