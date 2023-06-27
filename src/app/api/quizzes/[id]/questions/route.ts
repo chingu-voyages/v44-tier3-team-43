@@ -1,7 +1,7 @@
 import { getUserSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { quizSchema } from "@/utils/schemas";
+import { questionSchema } from "@/utils/schemas";
 import { prisma } from "@/lib/prisma";
 
 export const POST = async (req: NextRequest) => {
@@ -23,7 +23,7 @@ export const POST = async (req: NextRequest) => {
 
 		const body = await req.json();
 
-		const response = quizSchema.safeParse(body);
+		const response = questionSchema.safeParse(body);
 
 		if (!response.success) {
 			const { errors } = response.error;
@@ -38,35 +38,51 @@ export const POST = async (req: NextRequest) => {
 			);
 		}
 
-		const { title, category, image } = response.data;
+		const { quizId, title, answers } = response.data;
 
-		const dbCategory = await prisma.category.findUnique({
+		const quiz = await prisma.quiz.findUnique({
 			where: {
-				name: category
+				id: quizId
 			}
 		});
 
-		if (!dbCategory) {
+		if (!quiz) {
 			return NextResponse.json(
 				{
 					error: {
-						message: `Invalid request: Category '${category}' doesn't exist`
+						message: `Invalid request: Quiz with id '${quizId}' doesn't exist`
 					}
 				},
 				{
 					status: 400
 				}
 			);
+		} else if (quiz.userId !== user.id) {
+			return NextResponse.json(
+				{
+					error: { message: "Forbidden" }
+				},
+				{
+					status: 403
+				}
+			);
 		}
 
-		const data = await prisma.quiz.create({
+		const data = await prisma.question.create({
 			data: {
-				userId: user.id,
-				category,
+				quizId,
 				title,
-				image:
-					image ||
-					"https://archive.org/download/placeholder-image/placeholder-image.jpg"
+				answers: {
+					createMany: {
+						data: answers.map((answer) => ({
+							text: answer.text,
+							correct: answer.correct
+						}))
+					}
+				}
+			},
+			include: {
+				answers: true
 			}
 		});
 
