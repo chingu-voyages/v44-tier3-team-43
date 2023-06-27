@@ -6,6 +6,7 @@ export const answerSchema = z.object({
 });
 
 export const questionSchema = z.object({
+	quizId: z.string(),
 	title: z.string().max(100),
 	answers: z.array(answerSchema).min(2).max(4)
 });
@@ -16,6 +17,5 @@ export const quizSchema = z.object({
 	image: z
 		.string()
 		.regex(/^(ftp|http|https):\/\/[^ "]+$/)
-		.optional(),
-	questions: z.array(questionSchema).min(1).max(20)
+		.optional()
 });
