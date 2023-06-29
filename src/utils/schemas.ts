@@ -6,7 +6,6 @@ export const answerSchema = z.object({
 });
 
 export const questionSchema = z.object({
-	quizId: z.string(),
 	title: z.string().max(100),
 	answers: z.array(answerSchema).min(2).max(4)
 });

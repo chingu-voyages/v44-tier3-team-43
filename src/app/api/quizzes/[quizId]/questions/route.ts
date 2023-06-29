@@ -4,7 +4,10 @@ import { z } from "zod";
 import { questionSchema } from "@/utils/schemas";
 import { prisma } from "@/lib/prisma";
 
-export const POST = async (req: NextRequest) => {
+export const POST = async (
+	req: NextRequest,
+	{ params: { quizId } }: { params: { quizId: string } }
+) => {
 	try {
 		const user = await getUserSession().then((session) => session?.user);
 
@@ -38,7 +41,7 @@ export const POST = async (req: NextRequest) => {
 			);
 		}
 
-		const { quizId, title, answers } = response.data;
+		const { title, answers } = response.data;
 
 		const quiz = await prisma.quiz.findUnique({
 			where: {
