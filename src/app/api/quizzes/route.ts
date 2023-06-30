@@ -73,14 +73,9 @@ export const POST = async (req: NextRequest) => {
 			}
 		});
 
-		return NextResponse.json(
-			{
-				data
-			},
-			{
-				status: 200
-			}
-		);
+		return NextResponse.json(data, {
+			status: 200
+		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
 			return NextResponse.json(
