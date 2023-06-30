@@ -40,9 +40,12 @@ export const POST = async (req: NextRequest) => {
 
 		const { title, category, image } = response.data;
 
-		const dbCategory = await prisma.category.findUnique({
+		const dbCategory = await prisma.category.findFirst({
 			where: {
-				name: category
+				name: {
+					equals: category,
+					mode: "insensitive"
+				}
 			}
 		});
 
@@ -62,7 +65,7 @@ export const POST = async (req: NextRequest) => {
 		const data = await prisma.quiz.create({
 			data: {
 				userId: user.id,
-				category,
+				category: dbCategory.name,
 				title,
 				image:
 					image ||
