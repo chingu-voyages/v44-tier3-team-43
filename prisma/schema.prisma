@@ -76,14 +76,14 @@ model Category {
 model Question {
   id      String   @id @default(cuid())
   title   String
-  Quiz    Quiz     @relation(fields: [quizId], references: [id])
+  Quiz    Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
   quizId  String
   answers Answer[]
 }
 
 model Answer {
   id         String   @id @default(cuid())
-  Question   Question @relation(fields: [questionId], references: [id])
+  Question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
   questionId String
   text       String
   correct    Boolean
