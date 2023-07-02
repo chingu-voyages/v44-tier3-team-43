@@ -1,6 +1,6 @@
 const Footer = () => (
-	<footer className="w-full mt-28 lg:mt-32 py-7 lg:pt-10 lg:pb-24 bg-custom-black border-t border-dark-grey">
-		<p className="container text-center text-xs sm:text-base">
+	<footer className="w-full mt-16 md:mt-28 lg:mt-32 py-7 lg:pt-10 lg:pb-24 bg-custom-black border-t border-dark-grey">
+		<p className="container text-center text-sm sm:text-base">
 			Developed by{" "}
 			<a
 				className="text-custom-green font-medium"

@@ -31,7 +31,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 				<Providers>
 					<CategoriesStoreInitializer categories={categories} />
 					<Header />
-					<main className="mt-28 sm:mt-40 flex-1 container">{children}</main>
+					<main className="mt-28 md:mt-40 flex-1 container">{children}</main>
 					<Footer />
 				</Providers>
 			</body>
