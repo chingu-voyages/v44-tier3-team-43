@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	DropdownContent,
 	DropdownItem,
@@ -12,20 +10,16 @@ import {
 } from "@/components/Dropdown";
 import Link from "next/link";
 import { HiMenuAlt3 } from "react-icons/hi";
-import Button from "@/components/Button";
 import { BsChevronLeft } from "react-icons/bs";
 import clsx from "clsx";
-import { signOut, useSession } from "next-auth/react";
-import GoogleButton from "./GoogleButton";
+import LoginButton from "@/components/LoginButton";
 import useCategoriesStore from "@/stores/categoriesStore";
+import LogoutButton from "@/components/LogoutButton";
+import { getUserSession } from "@/lib/auth";
 
-const MobileMenu = () => {
-	const { categories } = useCategoriesStore();
-	const { data: session } = useSession();
-
-	const handleSignOut = async () => {
-		await signOut();
-	};
+const MobileMenu = async () => {
+	const session = await getUserSession();
+	const categories = useCategoriesStore.getState().categories;
 
 	return (
 		<nav className="flex items-center lg:hidden">
@@ -81,17 +75,11 @@ const MobileMenu = () => {
 						</DropdownSubContent>
 					</DropdownSub>
 					<DropdownSeparator />
-					{session ? (
-						<Button size="sm" onClick={handleSignOut}>
-							Sign out
-						</Button>
-					) : (
-						<GoogleButton size="sm">Sign in</GoogleButton>
-					)}
+					{session ? <LogoutButton size="sm" /> : <LoginButton size="sm" />}
 				</DropdownContent>
 			</DropdownRoot>
 		</nav>
 	);
 };
 
-export default MobileMenu;
+export default MobileMenu as unknown as () => JSX.Element;

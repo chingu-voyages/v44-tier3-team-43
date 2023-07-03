@@ -6,7 +6,7 @@ import MobileMenu from "@/components/MobileMenu";
 import clsx from "clsx";
 import { getUserSession } from "@/lib/auth";
 import User from "@/components/User";
-import GoogleButton from "@/components/GoogleButton";
+import LoginButton from "@/components/LoginButton";
 
 const Header = async () => {
 	const session = await getUserSession();
@@ -61,7 +61,7 @@ const Header = async () => {
 						{session ? (
 							<User name={session.user.name!} image={session.user.image!} />
 						) : (
-							<GoogleButton />
+							<LoginButton />
 						)}
 					</div>
 					<MobileMenu />
