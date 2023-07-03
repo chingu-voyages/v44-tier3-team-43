@@ -2,10 +2,10 @@ import Heading from "@/components/Heading";
 import { searchQuizzes } from "@/utils/fetchers";
 import Quizzes from "@/components/Quizzes";
 import Link from "next/link";
-import { buttonVariants } from "./Button";
+import { buttonVariants } from "@/components/Button";
 
 const LatestQuizzes = async () => {
-	const quizzes = await searchQuizzes({ sortBy: "latest", perPage: 6 });
+	const quizzes = await searchQuizzes({ sortBy: "latest", perPage: 10 });
 
 	return (
 		<>
