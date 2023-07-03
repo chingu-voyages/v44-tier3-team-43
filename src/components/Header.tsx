@@ -6,7 +6,7 @@ import MobileMenu from "@/components/MobileMenu";
 import clsx from "clsx";
 import { getUserSession } from "@/lib/auth";
 import User from "@/components/User";
-import GoogleButton from "@/components/GoogleButton";
+import LoginButton from "@/components/LoginButton";
 
 const Header = async () => {
 	const session = await getUserSession();
@@ -32,8 +32,8 @@ const Header = async () => {
 						/>
 						<Image
 							className="block md:hidden"
-							width={36}
-							height={36}
+							width={28}
+							height={28}
 							src="/logo-small.svg"
 							alt="logo small"
 						/>
@@ -59,9 +59,9 @@ const Header = async () => {
 					<Search />
 					<div className="hidden lg:flex items-center">
 						{session ? (
-							<User name={session.user.name} image={session.user.image} />
+							<User name={session.user.name!} image={session.user.image!} />
 						) : (
-							<GoogleButton />
+							<LoginButton />
 						)}
 					</div>
 					<MobileMenu />
