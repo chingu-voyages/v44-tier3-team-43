@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { extendedQuestionSchema } from "@/utils/schemas";
-import { create } from "domain";
 
 export const PUT = async (
     req: NextRequest,
