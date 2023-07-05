@@ -1,5 +1,3 @@
-"use client";
-
 import {
 	DropdownContent,
 	DropdownItem,
@@ -12,22 +10,16 @@ import {
 } from "@/components/Dropdown";
 import Link from "next/link";
 import { HiMenuAlt3 } from "react-icons/hi";
-import Button from "@/components/Button";
 import { BsChevronLeft } from "react-icons/bs";
 import clsx from "clsx";
-import { signIn, signOut, useSession } from "next-auth/react";
-import GoogleButton from "./GoogleButton";
+import LoginButton from "@/components/LoginButton";
+import useCategoriesStore from "@/stores/categoriesStore";
+import LogoutButton from "@/components/LogoutButton";
+import { getUserSession } from "@/lib/auth";
 
-const MobileMenu = () => {
-	const { data: session } = useSession();
-
-	const handleSignOut = async () => {
-		await signOut();
-	};
-
-	const signInWithGoogle = async () => {
-		await signIn("google");
-	};
+const MobileMenu = async () => {
+	const session = await getUserSession();
+	const categories = useCategoriesStore.getState().categories;
 
 	return (
 		<nav className="flex items-center lg:hidden">
@@ -65,45 +57,29 @@ const MobileMenu = () => {
 							className="grid-cols-2 gap-x-4"
 							alignOffset={-60}
 						>
-							{[
-								"Books",
-								"Film",
-								"Music",
-								"Theater",
-								"Television",
-								"Video Games",
-								"Nature",
-								"Computers",
-								"Mathematics",
-								"Mythology",
-								"Sports",
-								"Geography",
-								"History",
-								"Politics",
-								"Art",
-								"Celebrities",
-								"Animals"
-							].map((category, index) => (
-								<DropdownItem asChild key={index}>
-									<Link className="block" href="#">
-										{category}
+							{categories.map((category, index) => (
+								<DropdownItem asChild key={`${category}-${index}`}>
+									<Link
+										className="block"
+										href={{
+											pathname: "/search",
+											query: {
+												category: category.name.toLowerCase()
+											}
+										}}
+									>
+										{category.name}
 									</Link>
 								</DropdownItem>
 							))}
 						</DropdownSubContent>
 					</DropdownSub>
 					<DropdownSeparator />
-					{session ? (
-						<Button size="sm" onClick={handleSignOut}>
-							Sign out
-						</Button>
-					) : (
-						<GoogleButton size="sm">Sign in</GoogleButton>
-					)}
+					{session ? <LogoutButton size="sm" /> : <LoginButton size="sm" />}
 				</DropdownContent>
 			</DropdownRoot>
 		</nav>
 	);
 };
 
-export default MobileMenu;
+export default MobileMenu as unknown as () => JSX.Element;

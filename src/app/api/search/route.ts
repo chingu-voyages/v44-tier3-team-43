@@ -62,7 +62,15 @@ export const GET = async (req: NextRequest) => {
 				  }
 				: {}),
 			skip: (page - 1) * perPage,
-			take: perPage
+			take: perPage,
+			include: {
+				User: {
+					select: {
+						name: true,
+						image: true
+					}
+				}
+			}
 		});
 
 		return NextResponse.json(data, {

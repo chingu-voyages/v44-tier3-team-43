@@ -7,3 +7,13 @@
 		@apply outline-none focus-visible:ring-1 focus-visible:ring-custom-green;
 	}
 }
+
+@layer utilities {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+}
