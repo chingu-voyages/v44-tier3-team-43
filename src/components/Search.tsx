@@ -1,14 +1,22 @@
 "use client";
 
 import clsx from "clsx";
+import { useRouter } from "next/navigation";
 import { FormEvent, useRef } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 
 const Search = () => {
+	const router = useRouter();
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
+
+		const inputVal = inputRef.current?.value.trim();
+
+		if (!inputVal) return;
+
+		router.push("/search?query=" + inputVal);
 	};
 
 	return (

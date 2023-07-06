@@ -8,7 +8,7 @@ export const GET = async (req: NextRequest) => {
 		const query = req.nextUrl.searchParams.get("query");
 		const sortBy = req.nextUrl.searchParams.get("sort_by");
 		const page = Number(req.nextUrl.searchParams.get("page")) || 1;
-		const perPage = Number(req.nextUrl.searchParams.get("per_page")) || 15;
+		const perPage = Number(req.nextUrl.searchParams.get("per_page")) || 20;
 
 		if (!(category || query || sortBy === "featured" || sortBy === "latest")) {
 			return NextResponse.json(
@@ -24,29 +24,24 @@ export const GET = async (req: NextRequest) => {
 		}
 
 		const data = await prisma.quiz.findMany({
-			...(category
-				? {
-						where: {
-							category: {
-								equals: category,
-								mode: "insensitive"
-							}
-						},
-						orderBy: {
-							title: "asc"
-						}
-				  }
-				: {}),
-			...(query
-				? {
-						where: {
+			where: {
+				...(query
+					? {
 							title: {
 								contains: query,
 								mode: "insensitive"
 							}
-						}
-				  }
-				: {}),
+					  }
+					: {}),
+				...(category
+					? {
+							category: {
+								equals: category,
+								mode: "insensitive"
+							}
+					  }
+					: {})
+			},
 			...(sortBy === "featured"
 				? {
 						orderBy: {
