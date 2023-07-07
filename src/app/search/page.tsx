@@ -1,9 +1,9 @@
-import Heading from "@/components/Heading";
 import Hydrate from "@/components/Hydrate";
 import QuizSearch from "@/components/QuizSearch";
 import { searchQuizzes } from "@/utils/fetchers";
 import getQueryClient from "@/utils/getQueryClient";
 import { dehydrate } from "@tanstack/query-core";
+import { redirect } from "next/navigation";
 
 const Page = async ({
 	searchParams: { query, category, sortBy }
@@ -11,6 +11,10 @@ const Page = async ({
 	searchParams: { query?: string; sortBy?: string; category?: string };
 }) => {
 	const queryClient = getQueryClient();
+
+	if (!(query || sortBy || category)) {
+		redirect("/not-found");
+	}
 
 	await queryClient.prefetchInfiniteQuery(
 		["search-quizzes", query, category, sortBy],
@@ -27,7 +31,6 @@ const Page = async ({
 
 	return (
 		<>
-			<Heading size="5xl">Results</Heading>
 			<Hydrate state={dehydratedState}>
 				<QuizSearch />
 			</Hydrate>

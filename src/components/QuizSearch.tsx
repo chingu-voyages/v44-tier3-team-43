@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import InfiniteScroll from "react-infinite-scroll-component";
 import QuizCard from "@/components/QuizCard";
 import QuizzesGrid from "@/components/QuizzesGrid";
-import Quizzes from "./Quizzes";
+import QuizzesSkeleton from "@/components/QuizzesSkeleton";
 
 const QuizSearch = () => {
 	const searchParams = useSearchParams();
@@ -33,29 +33,33 @@ const QuizSearch = () => {
 
 	return (
 		<>
-			{status === "success" && (
-				<InfiniteScroll
-					dataLength={data?.pages.length}
-					next={fetchNextPage}
-					hasMore={!!hasNextPage}
-					loader={<h4>Loading...</h4>}
-				>
-					<QuizzesGrid>
-						{data?.pages.map((page) =>
-							page.map((quiz) => (
-								<QuizCard
-									id={quiz.id}
-									title={quiz.title}
-									quizImage={quiz.image}
-									userImage={quiz.User.image}
-									userName={quiz.User.name}
-									key={quiz.id}
-								/>
-							))
-						)}
-					</QuizzesGrid>
-				</InfiniteScroll>
-			)}
+			{status === "success" &&
+				(data.pages[0].length ? (
+					<InfiniteScroll
+						dataLength={data.pages.length}
+						next={fetchNextPage}
+						hasMore={!!hasNextPage}
+						loader={<QuizzesSkeleton className="mt-5 lg:mt-7" count={20} />}
+						scrollThreshold={0.4}
+					>
+						<QuizzesGrid>
+							{data.pages.map((page) =>
+								page.map((quiz) => (
+									<QuizCard
+										id={quiz.id}
+										title={quiz.title}
+										quizImage={quiz.image}
+										userImage={quiz.User.image}
+										userName={quiz.User.name}
+										key={quiz.id}
+									/>
+								))
+							)}
+						</QuizzesGrid>
+					</InfiniteScroll>
+				) : (
+					<p className="mt-11 md:text-lg">We couldn't find anything '_'</p>
+				))}
 		</>
 	);
 };
