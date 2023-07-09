@@ -33,6 +33,7 @@ const QuizSearch = () => {
 
 	return (
 		<>
+			{status === "loading" && <QuizzesSkeleton count={20} />}
 			{status === "success" &&
 				(data.pages[0].length ? (
 					<InfiniteScroll

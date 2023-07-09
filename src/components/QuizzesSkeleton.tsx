@@ -1,5 +1,5 @@
 import QuizSkeleton from "@/components/QuizSkeleton";
-import twclsx from "@/utils/twclsx";
+import QuizzesGrid from "@/components/QuizzesGrid";
 
 const QuizzesSkeleton = ({
 	count = 10,
@@ -9,16 +9,11 @@ const QuizzesSkeleton = ({
 	className?: string;
 }) => (
 	<>
-		<div
-			className={twclsx(
-				"mt-8 grid grid-cols-2 auto-rows-fr gap-x-3 gap-y-5 lg:gap-x-5 lg:gap-y-7",
-				className
-			)}
-		>
+		<QuizzesGrid className={className}>
 			{Array.from(Array(count), (_, i) => (
 				<QuizSkeleton key={i} />
 			))}
-		</div>
+		</QuizzesGrid>
 	</>
 );
 

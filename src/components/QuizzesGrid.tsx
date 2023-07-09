@@ -7,7 +7,7 @@ interface IProps
 const QuizzesGrid = ({ children, className, ...rest }: IProps) => (
 	<div
 		className={twclsx(
-			"mt-8 grid grid-cols-2 auto-rows-fr gap-x-3 gap-y-5 lg:gap-x-5 lg:gap-y-7",
+			"mt-11 grid grid-cols-2 auto-rows-fr gap-x-3 gap-y-5 lg:gap-x-5 lg:gap-y-7",
 			className
 		)}
 		{...rest}

@@ -37,10 +37,15 @@ module.exports = {
 					"0%": { transform: "scale(0.3)", opacity: "0.7" },
 					"70%": { transform: "scale(1.05)" },
 					"100%": { transform: "scale(1)", opacity: "1" }
+				},
+				slideDown: {
+					"0%": { transform: "translateY(-10%)", opacity: "0" },
+					"100%": { transform: "translateY(0)", opacity: "1" }
 				}
 			},
 			animation: {
-				"zoom-in": "zoomIn 0.3s"
+				"zoom-in": "zoomIn 0.3s",
+				"slide-down": "slideDown 0.3s"
 			}
 		}
 	},
