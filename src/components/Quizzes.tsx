@@ -1,8 +1,9 @@
 import { IQuiz } from "@/types/api";
 import QuizCard from "@/components/QuizCard";
+import QuizzesGrid from "@/components/QuizzesGrid";
 
 const Quizzes = ({ quizzes }: { quizzes: IQuiz[] }) => (
-	<div className="mt-8 grid grid-cols-2 auto-rows-fr gap-x-3 gap-y-5 lg:gap-x-5 lg:gap-y-7">
+	<QuizzesGrid>
 		{quizzes.map((quiz) => (
 			<QuizCard
 				id={quiz.id}
@@ -13,7 +14,7 @@ const Quizzes = ({ quizzes }: { quizzes: IQuiz[] }) => (
 				key={quiz.id}
 			/>
 		))}
-	</div>
+	</QuizzesGrid>
 );
 
 export default Quizzes;

@@ -19,8 +19,7 @@ const PopularTopics = () => {
 						<Link
 							className={buttonVariants({
 								size: "lg",
-								variant: "secondary",
-								className: "border-none"
+								variant: "secondary"
 							})}
 							href={{
 								pathname: "/search",
