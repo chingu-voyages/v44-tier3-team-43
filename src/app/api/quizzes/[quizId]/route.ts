@@ -14,7 +14,8 @@ export const GET = async (
 				id: quizId
 			},
 			include: {
-				_count: true
+				_count: true,
+				User: true
 			}
 		});
 

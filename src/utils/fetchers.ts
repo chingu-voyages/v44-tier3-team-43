@@ -1,4 +1,4 @@
-import { ICategory, IQuiz } from "@/types/api";
+import { ICategory, IExtendedQuiz, IQuestion, IQuiz } from "@/types/api";
 import absoluteUrl from "@/utils/absoluteUrl";
 
 export const getCategories = async (): Promise<ICategory[]> => {
@@ -39,6 +39,26 @@ export const searchQuizzes = async ({
 	const searchParams = new URLSearchParams(filteredParams);
 
 	const url = absoluteUrl("/api/search?" + searchParams);
+
+	const res = await fetch(url, {
+		cache: "no-store"
+	});
+
+	return res.json();
+};
+
+export const getQuiz = async (id: string): Promise<IExtendedQuiz> => {
+	const url = absoluteUrl(`/api/quizzes/${id}`);
+
+	const res = await fetch(url, {
+		cache: "no-store"
+	});
+
+	return res.json();
+};
+
+export const getQuestions = async (id: string): Promise<IQuestion[]> => {
+	const url = absoluteUrl(`/api/quizzes/${id}/questions`);
 
 	const res = await fetch(url, {
 		cache: "no-store"
