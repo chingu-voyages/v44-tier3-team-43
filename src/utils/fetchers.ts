@@ -1,4 +1,4 @@
-import { ICategory, IQuiz } from "@/types/api";
+import { ICategory, IExtendedQuiz, IQuestion, IQuiz } from "@/types/api";
 import absoluteUrl from "@/utils/absoluteUrl";
 
 export const getCategories = async (): Promise<ICategory[]> => {
@@ -8,7 +8,11 @@ export const getCategories = async (): Promise<ICategory[]> => {
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };
 
 export const searchQuizzes = async ({
@@ -44,5 +48,52 @@ export const searchQuizzes = async ({
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
+};
+
+export const getQuiz = async (id: string): Promise<IExtendedQuiz> => {
+	const url = absoluteUrl(`/api/quizzes/${id}`);
+
+	const res = await fetch(url, {
+		cache: "no-store"
+	});
+
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
+};
+
+export const getQuestions = async (id: string): Promise<IQuestion[]> => {
+	const url = absoluteUrl(`/api/quizzes/${id}/questions`);
+
+	const res = await fetch(url, {
+		cache: "no-store"
+	});
+
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
+};
+
+export const addQuizAttempt = async (id: string): Promise<string> => {
+	const url = absoluteUrl(`/api/quizzes/${id}/finish`);
+
+	const res = await fetch(url, {
+		method: "POST",
+		cache: "no-store"
+	});
+
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };

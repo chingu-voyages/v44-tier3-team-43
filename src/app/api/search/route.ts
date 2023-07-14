@@ -12,11 +12,7 @@ export const GET = async (req: NextRequest) => {
 
 		if (!(category || query || sortBy === "featured" || sortBy === "latest")) {
 			return NextResponse.json(
-				{
-					error: {
-						message: "Something went wrong! Check if parameters are correct!"
-					}
-				},
+				"Something went wrong! Check if parameters are correct!",
 				{
 					status: 400
 				}
@@ -40,7 +36,14 @@ export const GET = async (req: NextRequest) => {
 								mode: "insensitive"
 							}
 					  }
-					: {})
+					: {}),
+				questions: {
+					some: {
+						id: {
+							not: undefined
+						}
+					}
+				}
 			},
 			...(sortBy === "featured"
 				? {
@@ -73,23 +76,13 @@ export const GET = async (req: NextRequest) => {
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };

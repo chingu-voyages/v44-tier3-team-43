@@ -1,3 +1,5 @@
+import { Answer, Question } from "@prisma/client";
+
 export interface ICategory {
 	name: string;
 	_count: {
@@ -17,4 +19,14 @@ export interface IQuiz {
 		name: string;
 		image: string;
 	};
+}
+
+export interface IExtendedQuiz extends IQuiz {
+	_count: {
+		questions: number;
+	};
+}
+
+export interface IQuestion extends Question {
+	answers: Answer[];
 }

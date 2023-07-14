@@ -3,7 +3,7 @@ import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
 import { HTMLAttributes } from "react";
 
-export const headingVariants = cva(clsx("font-semibold text-white"), {
+export const headingVariants = cva(clsx("font-semibold"), {
 	variants: {
 		size: {
 			xl: "text-lg lg:text-xl",
