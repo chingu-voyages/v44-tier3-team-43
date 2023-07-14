@@ -3,67 +3,43 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 
 export const POST = async (
-    req: NextRequest,
-    { params: { quizId } }: { params: { quizId: string } }
+	req: NextRequest,
+	{ params: { quizId } }: { params: { quizId: string } }
 ) => {
-    try {
-        const quiz = await prisma.quiz.findUnique({
-            where: {
-                id: quizId
-            }
-        });
+	try {
+		const quiz = await prisma.quiz.findUnique({
+			where: {
+				id: quizId
+			}
+		});
 
-        if (!quiz) {
-            return NextResponse.json(
-                {
-                    error: {
-                        message: "No quiz found!"
-                    }
-                },
-                {
-                    status: 404
-                }
-            );
-        }
+		if (!quiz) {
+			return NextResponse.json("No quiz found!", {
+				status: 404
+			});
+		}
 
-        await prisma.quiz.update({
-            where: {
-                id: quizId
-            },
-            data: {
-                attempts: quiz.attempts + 1
-            }
-        });
+		await prisma.quiz.update({
+			where: {
+				id: quizId
+			},
+			data: {
+				attempts: quiz.attempts + 1
+			}
+		});
 
-        return NextResponse.json(
-            {
-                data: {
-                    message: "The count was updated!"
-                }
-            },
-            {
-                status: 200
-            }
-        );
-    } catch (err) {
-        if (err instanceof z.ZodError) {
-            return NextResponse.json(
-                {
-                    error: err.issues
-                },
-                {
-                    status: 400
-                }
-            );
-        }
+		return NextResponse.json("The count was updated!", {
+			status: 200
+		});
+	} catch (err) {
+		if (err instanceof z.ZodError) {
+			return NextResponse.json(err.message, {
+				status: 400
+			});
+		}
 
-        return NextResponse.json(
-            {
-                error: "Internal Server Error"
-            },
-            {
-                status: 500
-            }
-        );
-    }
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
+	}
 };

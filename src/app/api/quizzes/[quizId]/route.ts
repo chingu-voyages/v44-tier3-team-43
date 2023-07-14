@@ -20,16 +20,9 @@ export const GET = async (
 		});
 
 		if (!quiz) {
-			return NextResponse.json(
-				{
-					error: {
-						message: "No quiz found!"
-					}
-				},
-				{
-					status: 404
-				}
-			);
+			return NextResponse.json("No quiz found!", {
+				status: 404
+			});
 		}
 
 		return NextResponse.json(quiz, {
@@ -37,24 +30,14 @@ export const GET = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };
 
@@ -66,25 +49,14 @@ export const PUT = async (
 		const user = await getUserSession().then((session) => session?.user);
 
 		if (!user) {
-			return NextResponse.json(
-				{
-					error: {
-						message: "Unauthorized to perform this action!"
-					}
-				},
-				{
-					status: 401
-				}
-			);
+			return NextResponse.json("Unauthorized to perform this action!", {
+				status: 401
+			});
 		}
 
 		if (!quizId) {
 			return NextResponse.json(
-				{
-					error: {
-						message: "Something went wrong! Check if parameters are correct!"
-					}
-				},
+				"Something went wrong! Check if parameters are correct!",
 				{
 					status: 400
 				}
@@ -98,16 +70,9 @@ export const PUT = async (
 		});
 
 		if (quiz?.userId !== user.id) {
-			return NextResponse.json(
-				{
-					error: {
-						message: "Forbidden"
-					}
-				},
-				{
-					status: 403
-				}
-			);
+			return NextResponse.json("Forbidden", {
+				status: 403
+			});
 		}
 
 		const body = await req.json();
@@ -115,16 +80,9 @@ export const PUT = async (
 		const response = quizSchema.safeParse(body);
 
 		if (!response.success) {
-			const { errors } = response.error;
-
-			return NextResponse.json(
-				{
-					error: { message: "Invalid request", errors }
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json("Invalid request", {
+				status: 400
+			});
 		}
 
 		const { category, title, image } = response.data;
@@ -140,11 +98,7 @@ export const PUT = async (
 
 		if (!dbCategory) {
 			return NextResponse.json(
-				{
-					error: {
-						message: `Invalid request: Category '${category}' doesn't exist`
-					}
-				},
+				`Invalid request: Category '${category}' doesn't exist`,
 				{
 					status: 400
 				}
@@ -167,24 +121,14 @@ export const PUT = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };
 
@@ -196,25 +140,14 @@ export const DELETE = async (
 		const user = await getUserSession().then((session) => session?.user);
 
 		if (!user) {
-			return NextResponse.json(
-				{
-					error: {
-						message: "Unauthorized to perform this action!"
-					}
-				},
-				{
-					status: 401
-				}
-			);
+			return NextResponse.json("Unauthorized to perform this action!", {
+				status: 401
+			});
 		}
 
 		if (!quizId) {
 			return NextResponse.json(
-				{
-					error: {
-						message: "Something went wrong! Check if parameters are correct!"
-					}
-				},
+				"Something went wrong! Check if parameters are correct!",
 				{
 					status: 400
 				}
@@ -229,24 +162,15 @@ export const DELETE = async (
 
 		if (!quiz) {
 			return NextResponse.json(
-				{
-					error: {
-						message: `Invalid request: Quiz with id '${quizId}' doesn't exist`
-					}
-				},
+				`Invalid request: Quiz with id '${quizId}' doesn't exist`,
 				{
 					status: 400
 				}
 			);
 		} else if (quiz.userId !== user.id) {
-			return NextResponse.json(
-				{
-					error: { message: "Forbidden" }
-				},
-				{
-					status: 403
-				}
-			);
+			return NextResponse.json("Forbidden", {
+				status: 403
+			});
 		}
 
 		await prisma.quiz.delete({
@@ -256,35 +180,20 @@ export const DELETE = async (
 		});
 
 		return NextResponse.json(
-			{
-				data: {
-					message:
-						"The selected quiz and related questions have been successfully deleted!"
-				}
-			},
+			"The selected quiz and related questions have been successfully deleted!",
 			{
 				status: 200
 			}
 		);
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };

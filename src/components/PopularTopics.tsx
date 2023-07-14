@@ -13,7 +13,7 @@ const PopularTopics = () => {
 		<>
 			<Heading size="5xl">Popular Topics</Heading>
 			<ScrollingMenu wrapperClassName="mt-6 lg:mt-8">
-				{categories
+				{[...categories]
 					.sort((a, b) => b._count.quizzes - a._count.quizzes)
 					.map((category, index) => (
 						<Link

@@ -22,6 +22,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 
 	return (
 		<html lang="en">
+			<head>
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+			</head>
 			<body
 				className={twclsx(
 					"min-h-screen flex flex-col bg-custom-black text-custom-white",
@@ -31,7 +34,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
 				<Providers>
 					<CategoriesStoreInitializer categories={categories} />
 					<Header />
-					<main className="mt-28 md:mt-40 flex-1 container">{children}</main>
+					<main className="mt-28 md:mt-40 flex-1 container flex flex-col">
+						{children}
+					</main>
 					<Footer />
 				</Providers>
 			</body>

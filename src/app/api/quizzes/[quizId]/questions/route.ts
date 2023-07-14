@@ -17,11 +17,7 @@ export const GET = async (
 
 		if (!quiz) {
 			return NextResponse.json(
-				{
-					error: {
-						message: `Invalid request: Quiz with id '${quizId}' doesn't exist`
-					}
-				},
+				`Invalid request: Quiz with id '${quizId}' doesn't exist`,
 				{
 					status: 400
 				}
@@ -42,24 +38,14 @@ export const GET = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };
 
@@ -71,16 +57,9 @@ export const POST = async (
 		const user = await getUserSession().then((session) => session?.user);
 
 		if (!user) {
-			return NextResponse.json(
-				{
-					error: {
-						message: "Unauthorized to perform this action"
-					}
-				},
-				{
-					status: 401
-				}
-			);
+			return NextResponse.json("Unauthorized to perform this action", {
+				status: 401
+			});
 		}
 
 		const body = await req.json();
@@ -88,16 +67,9 @@ export const POST = async (
 		const response = questionSchema.safeParse(body);
 
 		if (!response.success) {
-			const { errors } = response.error;
-
-			return NextResponse.json(
-				{
-					error: { message: "Invalid request", errors }
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json("Invalid request", {
+				status: 400
+			});
 		}
 
 		const { title, answers } = response.data;
@@ -110,24 +82,15 @@ export const POST = async (
 
 		if (!quiz) {
 			return NextResponse.json(
-				{
-					error: {
-						message: `Invalid request: Quiz with id '${quizId}' doesn't exist`
-					}
-				},
+				`Invalid request: Quiz with id '${quizId}' doesn't exist`,
 				{
 					status: 400
 				}
 			);
 		} else if (quiz.userId !== user.id) {
-			return NextResponse.json(
-				{
-					error: { message: "Forbidden" }
-				},
-				{
-					status: 403
-				}
-			);
+			return NextResponse.json("Forbidden", {
+				status: 403
+			});
 		}
 
 		const data = await prisma.question.create({
@@ -153,23 +116,13 @@ export const POST = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };

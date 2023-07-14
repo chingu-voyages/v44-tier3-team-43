@@ -1,7 +1,7 @@
 import Heading from "@/components/Heading";
 import QuizSearch from "@/components/QuizSearch";
 import QuizSearchFilters from "@/components/QuizSearchFilters";
-import { redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 
 const Page = ({
 	searchParams: { query, category, sortBy }
@@ -9,7 +9,7 @@ const Page = ({
 	searchParams: { query?: string; sortBy?: string; category?: string };
 }) => {
 	if (!(query || sortBy || category)) {
-		redirect("/not-found");
+		notFound();
 	}
 
 	return (

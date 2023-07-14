@@ -7,6 +7,9 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import QuizCard from "@/components/QuizCard";
 import QuizzesGrid from "@/components/QuizzesGrid";
 import QuizzesSkeleton from "@/components/QuizzesSkeleton";
+import Image from "next/image";
+import clsx from "clsx";
+import Heading from "./Heading";
 
 const QuizSearch = () => {
 	const searchParams = useSearchParams();
@@ -59,7 +62,19 @@ const QuizSearch = () => {
 						</QuizzesGrid>
 					</InfiniteScroll>
 				) : (
-					<p className="mt-11 md:text-lg">We couldn't find anything '_'</p>
+					<div className="mt-11 flex flex-wrap items-center gap-6">
+						<div className="relative max-w-[6rem] sm:max-w-[8rem] w-full aspect-square">
+							<Image fill src="/no-results.png" alt="no-results" />
+						</div>
+						<div>
+							<Heading size="3xl" as="h3">
+								We couldn't find anything...
+							</Heading>
+							<p className="mt-2 lg:mt-4 lg:text-lg">
+								Try a different search query or category
+							</p>
+						</div>
+					</div>
 				))}
 		</>
 	);

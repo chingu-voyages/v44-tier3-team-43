@@ -8,7 +8,11 @@ export const getCategories = async (): Promise<ICategory[]> => {
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };
 
 export const searchQuizzes = async ({
@@ -44,7 +48,11 @@ export const searchQuizzes = async ({
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };
 
 export const getQuiz = async (id: string): Promise<IExtendedQuiz> => {
@@ -54,7 +62,11 @@ export const getQuiz = async (id: string): Promise<IExtendedQuiz> => {
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };
 
 export const getQuestions = async (id: string): Promise<IQuestion[]> => {
@@ -64,7 +76,11 @@ export const getQuestions = async (id: string): Promise<IQuestion[]> => {
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };
 
 export const addQuizAttempt = async (id: string): Promise<string> => {
@@ -75,5 +91,9 @@ export const addQuizAttempt = async (id: string): Promise<string> => {
 		cache: "no-store"
 	});
 
-	return res.json();
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
 };

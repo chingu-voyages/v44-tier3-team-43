@@ -22,23 +22,13 @@ export const GET = async () => {
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(
-				{
-					error: err.issues
-				},
-				{
-					status: 400
-				}
-			);
+			return NextResponse.json(err.message, {
+				status: 400
+			});
 		}
 
-		return NextResponse.json(
-			{
-				error: "Internal Server Error"
-			},
-			{
-				status: 500
-			}
-		);
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
 	}
 };
