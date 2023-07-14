@@ -36,7 +36,14 @@ export const GET = async (req: NextRequest) => {
 								mode: "insensitive"
 							}
 					  }
-					: {})
+					: {}),
+				questions: {
+					some: {
+						id: {
+							not: undefined
+						}
+					}
+				}
 			},
 			...(sortBy === "featured"
 				? {
