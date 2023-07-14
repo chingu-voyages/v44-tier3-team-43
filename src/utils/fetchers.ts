@@ -66,3 +66,14 @@ export const getQuestions = async (id: string): Promise<IQuestion[]> => {
 
 	return res.json();
 };
+
+export const addQuizAttempt = async (id: string): Promise<string> => {
+	const url = absoluteUrl(`/api/quizzes/${id}/finish`);
+
+	const res = await fetch(url, {
+		method: "POST",
+		cache: "no-store"
+	});
+
+	return res.json();
+};

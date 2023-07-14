@@ -7,8 +7,9 @@ import { Answer } from "@prisma/client";
 import Heading from "@/components/Heading";
 import Button from "@/components/Button";
 import CircleProgress from "@/components/CircleProgress";
+import { addQuizAttempt } from "@/utils/fetchers";
 
-const Questions = ({ questions }: { questions: IQuestion[] }) => {
+const Questions = ({ questions, quizId }: { questions: IQuestion[]; quizId: string }) => {
 	const [isGameOver, setIsGameOver] = useState<boolean>(false);
 	const [questionIndex, setQuestionIndex] = useState<number>(0);
 	const [score, setScore] = useState<number>(0);
@@ -27,7 +28,11 @@ const Questions = ({ questions }: { questions: IQuestion[] }) => {
 		const newQuestionIndex = questionIndex + 1;
 
 		if (newQuestionIndex >= questions.length) {
-			return setIsGameOver(true);
+			setIsGameOver(true);
+
+			await addQuizAttempt(quizId);
+
+			return;
 		}
 
 		setQuestionIndex(newQuestionIndex);
