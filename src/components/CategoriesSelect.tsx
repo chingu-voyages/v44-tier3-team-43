@@ -12,8 +12,9 @@ import {
 	SelectValue,
 	SelectViewport
 } from "@/components/Select";
-import useCategoriesStore from "@/stores/categoriesStore";
+import useCategories from "@/hooks/useCategories";
 import { forwardRef } from "react";
+import Spinner from "@/components/Spinner";
 
 interface IProps {
 	value?: string;
@@ -23,7 +24,7 @@ interface IProps {
 
 const CategoriesSelect = forwardRef<HTMLSpanElement, IProps>(
 	({ value, onValueChange, disableAny }, ref) => {
-		const { categories } = useCategoriesStore();
+		const { data: categories, status } = useCategories();
 
 		return (
 			<SelectRoot value={value || "any"} onValueChange={onValueChange}>
@@ -36,18 +37,25 @@ const CategoriesSelect = forwardRef<HTMLSpanElement, IProps>(
 				</SelectTrigger>
 				<SelectContent>
 					<SelectScrollUpButton />
-					<SelectViewport>
-						<SelectItem value="any" disabled={disableAny}>
-							<SelectItemText>Any</SelectItemText>
-						</SelectItem>
-						{categories.map((category, index) => (
-							<SelectItem
-								key={`${category}-${index}`}
-								value={category.name.toLowerCase()}
-							>
-								<SelectItemText>{category.name}</SelectItemText>
-							</SelectItem>
-						))}
+					<SelectViewport
+						className={status === "loading" ? "py-4 flex justify-center" : ""}
+					>
+						{status === "loading" && <Spinner />}
+						{status === "success" && (
+							<>
+								<SelectItem value="any" disabled={disableAny}>
+									<SelectItemText>Any</SelectItemText>
+								</SelectItem>
+								{categories.map((category, index) => (
+									<SelectItem
+										key={`${category}-${index}`}
+										value={category.name.toLowerCase()}
+									>
+										<SelectItemText>{category.name}</SelectItemText>
+									</SelectItem>
+								))}
+							</>
+						)}
 					</SelectViewport>
 					<SelectScrollDownButton />
 				</SelectContent>
