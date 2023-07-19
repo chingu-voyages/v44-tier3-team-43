@@ -67,6 +67,7 @@ const SelectContent = forwardRef<
 			className
 		)}
 		position="popper"
+		avoidCollisions={false}
 		ref={ref}
 		{...rest}
 	>
