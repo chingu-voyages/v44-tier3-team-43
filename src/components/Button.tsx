@@ -16,11 +16,12 @@ export const buttonVariants = cva(
 				primary: "bg-custom-green",
 				secondary: "bg-dark-grey",
 				"secondary-outline": "bg-dark-grey border border-custom-green",
-				outline: "border border-light-grey"
+				outline: "border border-light-grey",
+				danger: "bg-custom-red focus-visible:ring-custom-red"
 			},
 			size: {
 				sm: "px-2.5 py-1 gap-x-0.5 text-sm rounded-lg",
-				base: "px-2.5 py-1 gap-x-0.5 text-sm rounded-lg sm:text-base sm:px-3 sm:py-1.5 sm:gap-x-1 lg:rounded-xl",
+				base: "px-2.5 py-1 gap-x-0.5 text-sm rounded-lg sm:text-base sm:px-3 sm:py-1.5 sm:gap-x-1 sm:rounded-xl",
 				lg: "px-3 py-1.5 gap-x-1 rounded-xl lg:px-3.5 lg:py-2 lg:gap-x-1.5 lg:text-lg lg:rounded-2xl"
 			}
 		},

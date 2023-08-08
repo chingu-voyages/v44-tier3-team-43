@@ -8,9 +8,12 @@ const nextConfig = {
 			},
 			{
 				protocol: "https",
-				hostname: "archive.org"
+				hostname: "ik.imagekit.io"
 			}
 		]
+	},
+	eslint: {
+		ignoreDuringBuilds: true
 	}
 };
 

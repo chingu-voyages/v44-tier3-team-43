@@ -1,8 +1,10 @@
 import { getUserSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { quizSchema } from "@/utils/schemas";
+import { createQuizSchema } from "@/utils/schemas";
 import { prisma } from "@/lib/prisma";
+import imagekit from "@/lib/imageKit";
+import generateZodMessage from "@/utils/generateZodMessage";
 
 export const POST = async (req: NextRequest) => {
 	try {
@@ -14,17 +16,17 @@ export const POST = async (req: NextRequest) => {
 			});
 		}
 
-		const body = await req.json();
+		const formData = await req.formData();
 
-		const response = quizSchema.safeParse(body);
+		const formTitle = formData.get("title") as string | null;
+		const formCategory = formData.get("category") as string | null;
+		const formImage = formData.get("image") as Blob | null;
 
-		if (!response.success) {
-			return NextResponse.json(response.error.message, {
-				status: 400
-			});
-		}
-
-		const { title, category, image } = response.data;
+		const { title, category, image } = createQuizSchema.parse({
+			title: formTitle,
+			category: formCategory,
+			image: formImage
+		});
 
 		const dbCategory = await prisma.category.findFirst({
 			where: {
@@ -44,23 +46,42 @@ export const POST = async (req: NextRequest) => {
 			);
 		}
 
-		const data = await prisma.quiz.create({
+		const buffer = Buffer.from(await image.arrayBuffer());
+
+		const uploadedImage = await imagekit.upload({
+			file: buffer,
+			fileName: image.name,
+			useUniqueFileName: true
+		});
+
+		const imageUrl = imagekit.url({
+			src: uploadedImage.url,
+			transformation: [
+				{
+					width: 1024
+				}
+			]
+		});
+
+		const quiz = await prisma.quiz.create({
 			data: {
 				userId: user.id,
-				category: dbCategory.name,
 				title,
-				image:
-					image ||
-					"https://archive.org/download/placeholder-image/placeholder-image.jpg"
+				category: dbCategory.name,
+				image: imageUrl
+			},
+			include: {
+				_count: true,
+				User: true
 			}
 		});
 
-		return NextResponse.json(data, {
+		return NextResponse.json(quiz, {
 			status: 200
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}

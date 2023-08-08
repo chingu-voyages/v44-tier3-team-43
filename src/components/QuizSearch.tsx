@@ -8,8 +8,8 @@ import QuizCard from "@/components/QuizCard";
 import QuizzesGrid from "@/components/QuizzesGrid";
 import QuizzesSkeleton from "@/components/QuizzesSkeleton";
 import Image from "next/image";
-import clsx from "clsx";
-import Heading from "./Heading";
+import Heading from "@/components/Heading";
+import { BiErrorCircle } from "react-icons/bi";
 
 const QuizSearch = () => {
 	const searchParams = useSearchParams();
@@ -36,7 +36,7 @@ const QuizSearch = () => {
 
 	return (
 		<>
-			{status === "loading" && <QuizzesSkeleton count={20} />}
+			{status === "loading" && <QuizzesSkeleton className="mt-11" count={20} />}
 			{status === "success" &&
 				(data.pages[0].length ? (
 					<InfiniteScroll
@@ -46,7 +46,7 @@ const QuizSearch = () => {
 						loader={<QuizzesSkeleton className="mt-5 lg:mt-7" count={20} />}
 						scrollThreshold={0.4}
 					>
-						<QuizzesGrid>
+						<QuizzesGrid className="mt-11">
 							{data.pages.map((page) =>
 								page.map((quiz) => (
 									<QuizCard
@@ -76,6 +76,17 @@ const QuizSearch = () => {
 						</div>
 					</div>
 				))}
+			{status === "error" && (
+				<div className="mt-11 flex flex-wrap items-center gap-6">
+					<BiErrorCircle className="w-24 h-24 lg:w-32 lg:h-32 text-custom-red" />
+					<div>
+						<Heading size="3xl" as="h3">
+							Something went wrong...
+						</Heading>
+						<p className="mt-2 lg:mt-4 lg:text-lg">Please try again later</p>
+					</div>
+				</div>
+			)}
 		</>
 	);
 };

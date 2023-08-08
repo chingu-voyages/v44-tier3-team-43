@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import generateZodMessage from "@/utils/generateZodMessage";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -62,12 +63,8 @@ export const GET = async (req: NextRequest) => {
 			skip: (page - 1) * perPage,
 			take: perPage,
 			include: {
-				User: {
-					select: {
-						name: true,
-						image: true
-					}
-				}
+				_count: true,
+				User: true
 			}
 		});
 
@@ -76,7 +73,7 @@ export const GET = async (req: NextRequest) => {
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}

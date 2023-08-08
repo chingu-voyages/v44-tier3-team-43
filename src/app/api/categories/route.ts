@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import generateZodMessage from "@/utils/generateZodMessage";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
@@ -22,7 +23,7 @@ export const GET = async () => {
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}
