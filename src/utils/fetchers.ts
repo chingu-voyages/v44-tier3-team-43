@@ -58,6 +58,37 @@ export const searchQuizzes = async ({
 	throw new Error(await json);
 };
 
+export const getMyQuizzes = async ({
+	page,
+	perPage
+}: {
+	page?: number;
+	perPage?: number;
+}): Promise<IQuiz[]> => {
+	const params = {
+		page: (page && String(page)) || "",
+		per_page: (perPage && String(perPage)) || ""
+	};
+
+	const filteredParams = Object.fromEntries(
+		Object.entries(params).filter(([key, value]) => value !== "")
+	);
+
+	const searchParams = new URLSearchParams(filteredParams);
+
+	const url = absoluteUrl(`/api/quizzes/my?` + searchParams);
+
+	const res = await fetch(url, {
+		cache: "no-store"
+	});
+
+	const json = res.json();
+
+	if (res.ok) return json;
+
+	throw new Error(await json);
+};
+
 export const getQuiz = async (id: string): Promise<IQuiz> => {
 	const url = absoluteUrl(`/api/quizzes/${id}`);
 
@@ -126,7 +157,7 @@ export const updateQuiz = async ({
 
 export const deleteQuiz = async (quizId: string): Promise<string> => {
 	const url = absoluteUrl(`/api/quizzes/${quizId}`);
-
+	
 	const res = await fetch(url, {
 		method: "DELETE"
 	});

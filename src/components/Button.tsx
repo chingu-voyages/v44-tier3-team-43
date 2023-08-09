@@ -17,7 +17,8 @@ export const buttonVariants = cva(
 				secondary: "bg-dark-grey",
 				"secondary-outline": "bg-dark-grey border border-custom-green",
 				outline: "border border-light-grey",
-				danger: "bg-custom-red focus-visible:ring-custom-red"
+				danger: "bg-custom-red focus-visible:ring-custom-red",
+				modify: "bg-custom-orange focus-visible:ring-custom-orange"
 			},
 			size: {
 				sm: "px-2.5 py-1 gap-x-0.5 text-sm rounded-lg",

@@ -70,7 +70,7 @@ const EditQuizForm = ({ id, title, category, image }: Props) => {
 
 			toast.success("Quiz has been deleted");
 
-			router.replace("/");
+			router.replace("/my-quizzes");
 		} catch (err) {
 			if (err instanceof Error) {
 				toast.error(err.message);
