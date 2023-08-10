@@ -61,13 +61,14 @@ const DialogTitle = forwardRef<
 	React.ElementRef<typeof Heading>,
 	React.ComponentProps<typeof Heading>
 >(({ children, className = "", ...rest }, ref) => (
-	<DialogPrimitive.Title
-		className={twclsx("text-center", className)}
-		asChild
-		ref={ref}
-		{...rest}
-	>
-		<Heading size="2xl" as="h2">
+	<DialogPrimitive.Title asChild>
+		<Heading
+			className={twclsx("text-center", className)}
+			size="2xl"
+			as="h2"
+			ref={ref}
+			{...rest}
+		>
 			{children}
 		</Heading>
 	</DialogPrimitive.Title>
