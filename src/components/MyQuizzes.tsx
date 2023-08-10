@@ -11,30 +11,29 @@ import { BiErrorCircle } from "react-icons/bi";
 
 const MyQuizzes = () => {
 	const { data, status, fetchNextPage, hasNextPage } = useMyQuizzes();
+	const quizzes = data?.pages.reduce((acc, page) => [...acc, ...page]);
 
 	return (
 		<>
 			{status === "loading" && <QuizzesSkeleton count={20} />}
 			{status === "success" &&
-				(data.pages[0].length ? (
+				(quizzes?.length ? (
 					<InfiniteScroll
-						dataLength={data.pages.length}
+						dataLength={quizzes.length}
 						next={fetchNextPage}
 						hasMore={!!hasNextPage}
 						loader={<QuizzesSkeleton className="mt-5 lg:mt-7" count={20} />}
 						scrollThreshold={0.4}
 					>
 						<QuizzesGrid>
-							{data.pages.map((page) =>
-								page.map((quiz) => (
-									<MyQuizCard
-										id={quiz.id}
-										title={quiz.title}
-										quizImage={quiz.image}
-										key={quiz.id}
-									/>
-								))
-							)}
+							{quizzes.map((quiz) => (
+								<MyQuizCard
+									id={quiz.id}
+									title={quiz.title}
+									quizImage={quiz.image}
+									key={quiz.id}
+								/>
+							))}
 						</QuizzesGrid>
 					</InfiniteScroll>
 				) : (

@@ -14,6 +14,7 @@ import FormError from "@/components/FormError";
 import clsx from "clsx";
 import useUpdateQuestion from "@/hooks/useUpdateQuestion";
 import useDeleteQuestion from "@/hooks/useDeleteQuestion";
+import DeletionAlert from "@/components/DeletionAlert";
 
 type Props = Pick<IQuestion, "id" | "title" | "answers">;
 
@@ -46,7 +47,7 @@ const EditQuestionForm = ({ id, title, answers }: Props) => {
 
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
 		try {
-			await updateQuestion({ ...data, questionId: id, quizId });
+			await updateQuestion({ ...data, questionId: id, quizId: quizId as string });
 
 			toast.success("Question has been updated");
 
@@ -66,7 +67,7 @@ const EditQuestionForm = ({ id, title, answers }: Props) => {
 
 	const handleDelete = async () => {
 		try {
-			await deleteQuestion({ quizId, questionId: id });
+			await deleteQuestion({ quizId: quizId as string, questionId: id });
 
 			toast.success("Question has been deleted");
 
@@ -135,16 +136,21 @@ const EditQuestionForm = ({ id, title, answers }: Props) => {
 					>
 						Save changes
 					</Button>
-					<Button
-						size="lg"
-						variant="danger"
-						onClick={handleDelete}
-						disabled={isLoading}
-						isLoading={isDeleting}
-						type="button"
-					>
-						Delete question
-					</Button>
+					<DeletionAlert
+						Trigger={
+							<Button
+								size="lg"
+								variant="danger"
+								disabled={isLoading}
+								isLoading={isDeleting}
+								type="button"
+							>
+								Delete question
+							</Button>
+						}
+						description="Do you really want to delete this question? This action cannot be undone."
+						onDelete={handleDelete}
+					/>
 				</div>
 			</form>
 		</>

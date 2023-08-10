@@ -7,8 +7,9 @@ import { usePathname } from "next/navigation";
 import clsx from "clsx";
 import useDeleteQuestion from "@/hooks/useDeleteQuestion";
 import { toast } from "react-toastify";
+import DeletionAlert from "@/components/DeletionAlert";
 
-type Props = Pick<IQuestion, "id" | "quizId" | "title">
+type Props = Pick<IQuestion, "id" | "quizId" | "title">;
 
 const Question = ({ id, quizId, title }: Props) => {
 	const pathname = usePathname();
@@ -37,18 +38,17 @@ const Question = ({ id, quizId, title }: Props) => {
 			<div className="flex items-center gap-x-2">
 				<Link
 					className={buttonVariants({
-						className: "bg-custom-orange focus-visible:ring-custom-orange"
+						variant: "modify"
 					})}
 					href={`${pathname}/${id}/edit`}
 				>
 					Edit
 				</Link>
-				<Button
-					className="bg-custom-red focus-visible:ring-custom-red"
-					onClick={handleDelete}
-				>
-					Delete
-				</Button>
+				<DeletionAlert
+					Trigger={<Button variant="danger">Delete</Button>}
+					description="Do you really want to delete this question? This action cannot be undone."
+					onDelete={handleDelete}
+				/>
 			</div>
 		</div>
 	);

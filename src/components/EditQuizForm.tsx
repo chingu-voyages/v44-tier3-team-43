@@ -14,6 +14,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import useUpdateQuiz from "@/hooks/useUpdateQuiz";
 import useDeleteQuiz from "@/hooks/useDeleteQuiz";
+import DeletionAlert from "@/components/DeletionAlert";
 
 type Props = Pick<IQuiz, "id" | "title" | "category" | "image">;
 
@@ -106,16 +107,20 @@ const EditQuizForm = ({ id, title, category, image }: Props) => {
 					/>
 				</div>
 				<div className="flex items-center gap-x-3">
-					<Button
-						variant="danger"
-						size="lg"
-						disabled={isLoading}
-						isLoading={isDeleting}
-						type="button"
-						onClick={handleDelete}
-					>
-						Delete quiz
-					</Button>
+					<DeletionAlert
+						Trigger={
+							<Button
+								variant="danger"
+								size="lg"
+								disabled={isLoading}
+								isLoading={isDeleting}
+							>
+								Delete
+							</Button>
+						}
+						description="Do you really want to delete this quiz? This action cannot be undone."
+						onDelete={handleDelete}
+					/>
 					<Button
 						size="lg"
 						disabled={!isDirty || isLoading}

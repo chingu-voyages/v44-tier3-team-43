@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { toast } from "react-toastify";
 import Button, { buttonVariants } from "@/components/Button";
+import DeletionAlert from "@/components/DeletionAlert";
 
 interface IProps {
 	id: string;
@@ -59,13 +60,19 @@ const MyQuizCard = ({ id, title, quizImage }: IProps) => {
 							variant: "modify",
 							size: "sm"
 						})}
-						href={`quizzes/${id}/edit`}
+						href={`/quizzes/${id}/edit`}
 					>
 						Edit
 					</Link>
-					<Button variant="danger" size="sm" onClick={handleDelete}>
-						Delete
-					</Button>
+					<DeletionAlert
+						Trigger={
+							<Button variant="danger" size="sm">
+								Delete
+							</Button>
+						}
+						description="Do you really want to delete this quiz? This action cannot be undone."
+						onDelete={handleDelete}
+					/>
 				</div>
 			</div>
 		</div>

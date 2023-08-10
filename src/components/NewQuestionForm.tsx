@@ -40,7 +40,7 @@ const NewQuestionForm = () => {
 
 	const onSubmit: SubmitHandler<FormFields> = async (data) => {
 		try {
-			await createQuestion({ ...data, quizId });
+			await createQuestion({ ...data, quizId: quizId as string });
 
 			toast.success("Question has been added");
 
