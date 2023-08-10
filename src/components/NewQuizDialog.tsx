@@ -82,8 +82,12 @@ const NewQuizDialog = () => {
 		reset();
 	};
 
+	const handleOpenChange = (open: boolean) => {
+		if (!open) close();
+	};
+
 	return (
-		<DialogRoot open={!!isOpen}>
+		<DialogRoot open={!!isOpen} onOpenChange={handleOpenChange}>
 			<DialogOverlay />
 			<DialogContent className="font-normal">
 				<DialogTitle>New Quiz</DialogTitle>
