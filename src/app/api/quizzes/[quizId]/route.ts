@@ -1,8 +1,10 @@
 import { getUserSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { quizSchema } from "@/utils/schemas";
 import { prisma } from "@/lib/prisma";
+import { updateQuizSchema } from "@/utils/schemas";
+import imagekit from "@/lib/imageKit";
+import generateZodMessage from "@/utils/generateZodMessage";
 
 export const GET = async (
 	req: NextRequest,
@@ -30,7 +32,7 @@ export const GET = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}
@@ -69,59 +71,104 @@ export const PUT = async (
 			}
 		});
 
-		if (quiz?.userId !== user.id) {
+		if (!quiz) {
+			return NextResponse.json("No quiz found!", {
+				status: 404
+			});
+		} else if (quiz.userId !== user.id) {
 			return NextResponse.json("Forbidden", {
 				status: 403
 			});
 		}
 
-		const body = await req.json();
+		const formData = await req.formData();
 
-		const response = quizSchema.safeParse(body);
+		const formTitle = formData.get("title") as string | null;
+		const formCategory = formData.get("category") as string | null;
+		const formImage = formData.get("image") as Blob | null;
 
-		if (!response.success) {
-			return NextResponse.json("Invalid request", {
-				status: 400
+		const { title, category, image } = updateQuizSchema.parse({
+			title: formTitle,
+			category: formCategory,
+			image: formImage
+		});
+
+		let dbCategory;
+
+		if (category) {
+			dbCategory = await prisma.category.findFirst({
+				where: {
+					name: {
+						equals: category,
+						mode: "insensitive"
+					}
+				}
+			});
+
+			if (!dbCategory) {
+				return NextResponse.json(
+					`Invalid request: Category '${category}' doesn't exist`,
+					{
+						status: 400
+					}
+				);
+			}
+		}
+
+		let imageUrl;
+
+		if (image) {
+			const buffer = Buffer.from(await image.arrayBuffer());
+
+			const uploadedImage = await imagekit.upload({
+				file: buffer,
+				fileName: image.name,
+				useUniqueFileName: true
+			});
+
+			imageUrl = imagekit.url({
+				src: uploadedImage.url,
+				transformation: [
+					{
+						width: 1024
+					}
+				]
 			});
 		}
 
-		const { category, title, image } = response.data;
-
-		const dbCategory = await prisma.category.findFirst({
-			where: {
-				name: {
-					equals: category,
-					mode: "insensitive"
-				}
-			}
-		});
-
-		if (!dbCategory) {
-			return NextResponse.json(
-				`Invalid request: Category '${category}' doesn't exist`,
-				{
-					status: 400
-				}
-			);
-		}
-
-		const data = await prisma.quiz.update({
+		const updatedQuiz = await prisma.quiz.update({
 			where: {
 				id: quizId
 			},
 			data: {
-				category: dbCategory.name,
-				title,
-				image
+				...(title
+					? {
+							title
+					  }
+					: {}),
+				...(dbCategory
+					? {
+							category: dbCategory.name
+					  }
+					: {}),
+				...(image
+					? {
+							image: imageUrl
+					  }
+					: {})
+			},
+			include: {
+				_count: true,
+				User: true
 			}
 		});
 
-		return NextResponse.json(data, {
+		return NextResponse.json(updatedQuiz, {
 			status: 200
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}
@@ -187,7 +234,7 @@ export const DELETE = async (
 		);
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}

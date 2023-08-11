@@ -61,9 +61,6 @@ export const authOptions: NextAuthOptions = {
 				email: dbUser.email,
 				picture: dbUser.image
 			};
-		},
-		redirect() {
-			return "/";
 		}
 	}
 };

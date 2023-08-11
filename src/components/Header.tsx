@@ -7,6 +7,7 @@ import clsx from "clsx";
 import { getUserSession } from "@/lib/auth";
 import User from "@/components/User";
 import LoginButton from "@/components/LoginButton";
+import NewQuizDialogOpener from "@/components/NewQuizDialogOpener";
 
 const Header = async () => {
 	const session = await getUserSession();
@@ -42,7 +43,6 @@ const Header = async () => {
 						{[
 							{ href: "/", title: "Home" },
 							{ href: "/my-quizzes", title: "My Quizzes" },
-							{ href: "/new-quiz", title: "New Quiz" }
 						].map(({ href, title }, index) => (
 							<Link
 								className="transition duration-200 hover:text-custom-green active:opacity-80"
@@ -52,6 +52,7 @@ const Header = async () => {
 								{title}
 							</Link>
 						))}
+						<NewQuizDialogOpener>New Quiz</NewQuizDialogOpener>
 						<Categories />
 					</div>
 				</nav>

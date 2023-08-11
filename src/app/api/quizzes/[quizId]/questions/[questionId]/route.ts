@@ -2,7 +2,57 @@ import { getUserSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { extendedQuestionSchema } from "@/utils/schemas";
+import { updateQuestionSchema } from "@/utils/schemas";
+import generateZodMessage from "@/utils/generateZodMessage";
+
+export const GET = async (
+	req: NextRequest,
+	{ params: { quizId, questionId } }: { params: { quizId: string; questionId: string } }
+) => {
+	try {
+		const quiz = await prisma.quiz.findUnique({
+			where: {
+				id: quizId
+			}
+		});
+
+		if (!quiz) {
+			return NextResponse.json(
+				`Invalid request: Quiz with id '${quizId}' doesn't exist`,
+				{
+					status: 400
+				}
+			);
+		}
+
+		const question = await prisma.question.findUnique({
+			where: {
+				id: questionId
+			},
+			include: {
+				answers: {
+					orderBy: {
+						createdAt: "asc"
+					}
+				}
+			}
+		});
+
+		return NextResponse.json(question, {
+			status: 200
+		});
+	} catch (err) {
+		if (err instanceof z.ZodError) {
+			return NextResponse.json(generateZodMessage(err.issues), {
+				status: 400
+			});
+		}
+
+		return NextResponse.json("Internal Server Error", {
+			status: 500
+		});
+	}
+};
 
 export const PUT = async (
 	req: NextRequest,
@@ -19,15 +69,7 @@ export const PUT = async (
 
 		const body = await req.json();
 
-		const response = extendedQuestionSchema.safeParse(body);
-
-		if (!response.success) {
-			return NextResponse.json(response.error.message, {
-				status: 400
-			});
-		}
-
-		const { title, answers } = response.data;
+		const { title, answers } = updateQuestionSchema.parse(body);
 
 		if (!quizId) {
 			return NextResponse.json(
@@ -72,54 +114,62 @@ export const PUT = async (
 			);
 		}
 
-		const answersDB = await prisma.answer.findMany({
-			where: {
-				questionId
-			}
-		});
+		if (answers) {
+			const dbAnswers = await prisma.answer.findMany({
+				where: {
+					questionId
+				}
+			});
 
-		const answerToDelete = answersDB
-			.filter((answerDB) => !answers.some((answer) => answer.id === answerDB.id))
-			.map((answer) => answer.id);
+			const upsertAnswers = Promise.all(
+				answers.map(async (answer) => {
+					await prisma.answer.upsert({
+						where: {
+							id: answer.id ? answer.id : ""
+						},
+						create: {
+							questionId,
+							text: answer.text,
+							correct: answer.correct
+						},
+						update: {
+							text: answer.text,
+							correct: answer.correct
+						}
+					});
+				})
+			);
 
-		if (answerToDelete.length > 0) {
-			await prisma.answer.deleteMany({
+			const answersToDelete = dbAnswers
+				.filter(
+					(dbAnswer) => !answers.some((answer) => answer.id === dbAnswer.id)
+				)
+				.map((answer) => answer.id);
+
+			const deleteAnswers = prisma.answer.deleteMany({
 				where: {
 					id: {
-						in: answerToDelete
+						in: answersToDelete
 					}
 				}
 			});
-		}
 
-		Promise.all(
-			answers.map(async (answer) => {
-				await prisma.answer.upsert({
-					where: {
-						id: answer.id
-					},
-					create: {
-						questionId,
-						text: answer.text,
-						correct: answer.correct
-					},
-					update: {
-						text: answer.text,
-						correct: answer.correct
-					}
-				});
-			})
-		);
+			await Promise.all([upsertAnswers, deleteAnswers]);
+		}
 
 		const updatedQuestion = await prisma.question.update({
 			where: {
 				id: questionId
 			},
 			data: {
-				title: title
+				title
 			},
 			include: {
-				answers: true
+				answers: {
+					orderBy: {
+						updatedAt: "asc"
+					}
+				}
 			}
 		});
 
@@ -128,7 +178,7 @@ export const PUT = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}
@@ -209,7 +259,7 @@ export const DELETE = async (
 		);
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}

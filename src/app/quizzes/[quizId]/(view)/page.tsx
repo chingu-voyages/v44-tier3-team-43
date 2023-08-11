@@ -1,17 +1,19 @@
 import { buttonVariants } from "@/components/Button";
 import Heading from "@/components/Heading";
+import { getUserSession } from "@/lib/auth";
 import { getQuiz } from "@/utils/fetchers";
 import Image from "next/image";
 import Link from "next/link";
 
 const Page = async ({ params: { quizId } }: { params: { quizId: string } }) => {
-	const quiz = await getQuiz(quizId);
+	const [session, quiz] = await Promise.all([getUserSession(), getQuiz(quizId)]);
 
 	return (
 		<div className="max-w-[36rem] md:max-w-none flex flex-col md:flex-row gap-8">
 			<div className="relative max-w-[24rem] w-full md:max-w-none md:w-[40%] aspect-[3/2]">
 				<Image
-					className="rounded-lg object-cover"
+					className="rounded-lg object-cover bg-light-grey"
+					sizes="(min-width: 768px) 40vw, (min-width: 640px) 60vw, 100vw"
 					src={quiz.image}
 					alt={quiz.title}
 					fill
@@ -43,12 +45,25 @@ const Page = async ({ params: { quizId } }: { params: { quizId: string } }) => {
 					/>
 					<p className="text-sm lg:text-base">{quiz.User.name}</p>
 				</div>
-				<Link
-					className={buttonVariants({ className: "mt-8 md:mt-11", size: "lg" })}
-					href={`/quizzes/${quiz.id}/play`}
-				>
-					Play quiz
-				</Link>
+				<div className="mt-8 md:mt-11 flex items-center gap-x-3">
+					<Link
+						className={buttonVariants({ size: "lg" })}
+						href={`/quizzes/${quiz.id}/play`}
+					>
+						Play quiz
+					</Link>
+					{session && session.user.id === quiz.userId && (
+						<Link
+							className={buttonVariants({
+								variant: "secondary",
+								size: "lg"
+							})}
+							href={`/quizzes/${quiz.id}/edit`}
+						>
+							Edit quiz
+						</Link>
+					)}
+				</div>
 			</div>
 		</div>
 	);

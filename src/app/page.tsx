@@ -8,13 +8,13 @@ import { Suspense } from "react";
 const Home = () => (
 	<>
 		<PopularTopics />
-		<Heading className="mt-16 md:mt-20" size="3xl" as="h2">
+		<Heading className="mt-16 md:mt-20 mb-8" size="3xl" as="h2">
 			Latest Quizzes
 		</Heading>
 		<Suspense fallback={<QuizzesSkeleton />}>
 			<LatestQuizzes />
 		</Suspense>
-		<Heading className="mt-16 md:mt-20" size="3xl" as="h2">
+		<Heading className="mt-16 md:mt-20 mb-8" size="3xl" as="h2">
 			Featured Quizzes
 		</Heading>
 		<Suspense fallback={<QuizzesSkeleton />}>

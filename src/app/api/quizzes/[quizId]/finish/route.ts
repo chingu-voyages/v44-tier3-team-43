@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import generateZodMessage from "@/utils/generateZodMessage";
 
 export const POST = async (
 	req: NextRequest,
@@ -33,7 +34,7 @@ export const POST = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}

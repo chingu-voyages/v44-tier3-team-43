@@ -15,7 +15,9 @@ export default function Error({ error, reset }: { error: Error; reset: () => voi
 		<div className="relative py-7 my-auto flex flex-col items-center text-center overflow-hidden">
 			<p className="mb-2 lg:mb-4 lg:text-lg">There was a problem</p>
 			<Heading className="break-all" size="3xl" as="h2">
-				{error.message}
+				{process.env.NODE_ENV === "production"
+					? "Unexpected server error"
+					: error.message}
 			</Heading>
 			<div className="mt-8 lg:mt-11 flex gap-x-3">
 				<Button size="lg" onClick={reset}>

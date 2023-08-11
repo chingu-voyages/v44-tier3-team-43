@@ -4,7 +4,6 @@ import {
 	DropdownRoot,
 	DropdownSeparator,
 	DropdownSub,
-	DropdownSubContent,
 	DropdownSubTrigger,
 	DropdownTrigger
 } from "@/components/Dropdown";
@@ -13,13 +12,13 @@ import { HiMenuAlt3 } from "react-icons/hi";
 import { BsChevronLeft } from "react-icons/bs";
 import clsx from "clsx";
 import LoginButton from "@/components/LoginButton";
-import useCategoriesStore from "@/stores/categoriesStore";
 import LogoutButton from "@/components/LogoutButton";
 import { getUserSession } from "@/lib/auth";
+import MobileCategories from "@/components/MobileCategories";
+import NewQuizDialogOpener from "@/components/NewQuizDialogOpener";
 
 const MobileMenu = async () => {
 	const session = await getUserSession();
-	const categories = useCategoriesStore.getState().categories;
 
 	return (
 		<nav className="flex items-center lg:hidden">
@@ -34,8 +33,7 @@ const MobileMenu = async () => {
 					<div className="absolute right-2.5 -top-1 w-2 h-2 bg-inherit -rotate-45 origin-top-right"></div>
 					{[
 						{ href: "/", title: "Home" },
-						{ href: "/my-quizzes", title: "My Quizzes" },
-						{ href: "/new-quiz", title: "New Quiz" }
+						{ href: "/my-quizzes", title: "My Quizzes" }
 					].map(({ href, title }, index) => (
 						<DropdownItem asChild key={index}>
 							<Link className="block" href={href}>
@@ -43,6 +41,9 @@ const MobileMenu = async () => {
 							</Link>
 						</DropdownItem>
 					))}
+					<DropdownItem asChild>
+						<NewQuizDialogOpener>New Quiz</NewQuizDialogOpener>
+					</DropdownItem>
 					<DropdownSub>
 						<DropdownSubTrigger className="pl-4 -ml-4 text-sm">
 							<BsChevronLeft
@@ -53,26 +54,7 @@ const MobileMenu = async () => {
 							/>
 							Categories
 						</DropdownSubTrigger>
-						<DropdownSubContent
-							className="grid-cols-2 gap-x-4"
-							alignOffset={-60}
-						>
-							{categories.map((category, index) => (
-								<DropdownItem asChild key={`${category}-${index}`}>
-									<Link
-										className="block"
-										href={{
-											pathname: "/search",
-											query: {
-												category: category.name.toLowerCase()
-											}
-										}}
-									>
-										{category.name}
-									</Link>
-								</DropdownItem>
-							))}
-						</DropdownSubContent>
+						<MobileCategories />
 					</DropdownSub>
 					<DropdownSeparator />
 					{session ? <LogoutButton size="sm" /> : <LoginButton size="sm" />}

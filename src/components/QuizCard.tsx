@@ -13,12 +13,14 @@ interface IProps {
 const QuizCard = ({ id, title, quizImage, userImage, userName }: IProps) => (
 	<div className="flex flex-col md:flex-row bg-dark-grey rounded-lg overflow-hidden select-none">
 		<Link
-			className="relative w-full pb-[70%] md:w-[45%] md:pb-[36%] bg-custom-green"
+			className="relative w-full pb-[70%] md:w-[45%] md:pb-[36%]"
 			href={`/quizzes/${id}`}
+			tabIndex={-1}
 		>
 			<Image
-				className="object-cover transition duration-200 hover:opacity-80 active:opacity-60"
+				className="object-cover transition duration-200 hover:opacity-80 active:opacity-60 bg-light-grey"
 				fill
+				sizes="50vw"
 				src={quizImage}
 				alt={title}
 			/>

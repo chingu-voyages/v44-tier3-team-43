@@ -1,7 +1,7 @@
 import twclsx from "@/utils/twclsx";
 import { VariantProps, cva } from "class-variance-authority";
 import clsx from "clsx";
-import { HTMLAttributes } from "react";
+import { HTMLAttributes, forwardRef } from "react";
 
 export const headingVariants = cva(clsx("font-semibold"), {
 	variants: {
@@ -23,14 +23,20 @@ interface IProps
 	as?: React.ElementType;
 }
 
-const Heading = ({ className, children, size, as = "h1", ...props }: IProps) => {
-	const Component = as;
+const Heading = forwardRef<HTMLElement, IProps>(
+	({ className, children, size, as = "h1", ...props }, ref) => {
+		const Component = as;
 
-	return (
-		<Component className={twclsx(headingVariants({ size, className }))} {...props}>
-			{children}
-		</Component>
-	);
-};
+		return (
+			<Component
+				className={twclsx(headingVariants({ size, className }))}
+				ref={ref}
+				{...props}
+			>
+				{children}
+			</Component>
+		);
+	}
+);
 
 export default Heading;

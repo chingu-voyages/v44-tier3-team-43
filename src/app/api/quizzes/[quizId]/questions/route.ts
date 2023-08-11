@@ -1,8 +1,9 @@
 import { getUserSession } from "@/lib/auth";
 import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
-import { questionSchema } from "@/utils/schemas";
+import { createQuestionSchema } from "@/utils/schemas";
 import { prisma } from "@/lib/prisma";
+import generateZodMessage from "@/utils/generateZodMessage";
 
 export const GET = async (
 	req: NextRequest,
@@ -28,6 +29,9 @@ export const GET = async (
 			where: {
 				quizId: quizId
 			},
+			orderBy: {
+				createdAt: "asc"
+			},
 			include: {
 				answers: true
 			}
@@ -38,7 +42,7 @@ export const GET = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}
@@ -64,15 +68,7 @@ export const POST = async (
 
 		const body = await req.json();
 
-		const response = questionSchema.safeParse(body);
-
-		if (!response.success) {
-			return NextResponse.json("Invalid request", {
-				status: 400
-			});
-		}
-
-		const { title, answers } = response.data;
+		const { title, answers } = createQuestionSchema.parse(body);
 
 		const quiz = await prisma.quiz.findUnique({
 			where: {
@@ -107,7 +103,11 @@ export const POST = async (
 				}
 			},
 			include: {
-				answers: true
+				answers: {
+					orderBy: {
+						createdAt: "asc"
+					}
+				}
 			}
 		});
 
@@ -116,7 +116,7 @@ export const POST = async (
 		});
 	} catch (err) {
 		if (err instanceof z.ZodError) {
-			return NextResponse.json(err.message, {
+			return NextResponse.json(generateZodMessage(err.issues), {
 				status: 400
 			});
 		}

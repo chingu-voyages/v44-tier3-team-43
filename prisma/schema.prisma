@@ -64,8 +64,9 @@ model Quiz {
   Category  Category   @relation(fields: [category], references: [name])
   category  String
   questions Question[]
-  createdAt DateTime @default(now())
-  attempts  Int @default(0)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  attempts  Int        @default(0)
 }
 
 model Category {
@@ -74,11 +75,13 @@ model Category {
 }
 
 model Question {
-  id      String   @id @default(cuid())
-  title   String
-  Quiz    Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
-  quizId  String
-  answers Answer[]
+  id        String   @id @default(cuid())
+  title     String
+  Quiz      Quiz     @relation(fields: [quizId], references: [id], onDelete: Cascade)
+  quizId    String
+  answers   Answer[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Answer {
@@ -87,4 +90,6 @@ model Answer {
   questionId String
   text       String
   correct    Boolean
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 }

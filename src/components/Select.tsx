@@ -13,13 +13,14 @@ const SelectTrigger = forwardRef<
 	React.ElementRef<typeof Button>,
 	React.ComponentProps<typeof Button>
 >(({ children, className = "", ...rest }, ref) => (
-	<SelectPrimitive.Trigger ref={ref} asChild {...rest}>
+	<SelectPrimitive.Trigger asChild>
 		<Button
 			className={twclsx(
 				"justify-between radix-state-open:rounded-b-none group",
 				className
 			)}
 			variant="secondary"
+			ref={ref}
 			{...rest}
 		>
 			{children}
@@ -67,6 +68,7 @@ const SelectContent = forwardRef<
 			className
 		)}
 		position="popper"
+		avoidCollisions={false}
 		ref={ref}
 		{...rest}
 	>
