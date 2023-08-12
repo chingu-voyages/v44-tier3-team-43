@@ -14,7 +14,7 @@ const Page = async ({ params: { quizId } }: { params: { quizId: string } }) => {
 				<Image fill src="/empty-folder.png" alt="empty-folder" />
 			</div>
 			<Heading size="3xl" as="h3">
-				There's nothing here yet...
+				There&apos;s nothing here yet...
 			</Heading>
 		</div>
 	);

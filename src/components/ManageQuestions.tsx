@@ -59,7 +59,7 @@ const ManageQuestions = () => {
 									/>
 								</div>
 								<Heading size="2xl" as="h3">
-									There's nothing here yet...
+									There&apos;s nothing here yet...
 								</Heading>
 							</div>
 						)}

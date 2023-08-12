@@ -76,4 +76,6 @@ const CategoriesSelect = forwardRef<HTMLSpanElement, IProps>(
 	}
 );
 
+CategoriesSelect.displayName = "CategoriesSelect";
+
 export default CategoriesSelect;
