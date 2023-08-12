@@ -1,24 +1,19 @@
 import Heading from "@/components/Heading";
 import QuizSearch from "@/components/QuizSearch";
 import QuizSearchFilters from "@/components/QuizSearchFilters";
-import { notFound } from "next/navigation";
+import QuizzesSkeleton from "@/components/QuizzesSkeleton";
+import { Suspense } from "react";
 
-const Page = ({
-	searchParams: { query, category, sortBy }
-}: {
-	searchParams: { query?: string; sortBy?: string; category?: string };
-}) => {
-	if (!(query || sortBy || category)) {
-		notFound();
-	}
-
-	return (
-		<>
-			<Heading size="5xl">Results</Heading>
-			<QuizSearchFilters />
+const Page = () => (
+	<>
+		<Heading className="mb-8" size="5xl">
+			Results
+		</Heading>
+		<QuizSearchFilters />
+		<Suspense fallback={<QuizzesSkeleton className="mt-11" count={20} />}>
 			<QuizSearch />
-		</>
-	);
-};
+		</Suspense>
+	</>
+);
 
 export default Page;

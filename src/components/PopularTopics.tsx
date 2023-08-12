@@ -2,9 +2,10 @@
 
 import Heading from "@/components/Heading";
 import Link from "next/link";
-import Button, { buttonVariants } from "@/components/Button";
+import { buttonVariants } from "@/components/Button";
 import ScrollingMenu from "@/components/ScrollingMenu";
 import useCategories from "@/hooks/useCategories";
+import ButtonSkeleton from "@/components/ButtonSkeleton";
 
 const PopularTopics = () => {
 	const { data: categories, status } = useCategories();
@@ -36,9 +37,7 @@ const PopularTopics = () => {
 						))
 				) : status === "loading" ? (
 					Array.from(Array(20), (_, i) => (
-						<Button size="lg" variant="secondary" key={i}>
-							<span className="w-28 h-7 bg-light-grey rounded-md"></span>
-						</Button>
+						<ButtonSkeleton variant="secondary" size="lg" key={i} />
 					))
 				) : (
 					<></>

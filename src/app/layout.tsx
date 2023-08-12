@@ -5,6 +5,7 @@ import Providers from "@/components/Providers";
 import "@/styles/globals.css";
 import twclsx from "@/utils/twclsx";
 import { Inter } from "next/font/google";
+import { Suspense } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -27,7 +28,9 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => (
 		>
 			<Providers>
 				<Header />
-				<NewQuizDialog />
+				<Suspense fallback={<></>}>
+					<NewQuizDialog />
+				</Suspense>
 				<main className="mt-28 md:mt-40 flex-1 container flex flex-col">
 					{children}
 				</main>
