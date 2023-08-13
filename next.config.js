@@ -11,9 +11,6 @@ const nextConfig = {
 				hostname: "ik.imagekit.io"
 			}
 		]
-	},
-	eslint: {
-		ignoreDuringBuilds: true
 	}
 };
 

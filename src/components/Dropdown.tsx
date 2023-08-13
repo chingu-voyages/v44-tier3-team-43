@@ -22,6 +22,8 @@ const DropdownTrigger = forwardRef<
 	</DropdownMenuPrimitive.Trigger>
 ));
 
+DropdownTrigger.displayName = DropdownMenuPrimitive.Trigger.displayName;
+
 const DropdownContent = forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Content>,
 	React.ComponentProps<typeof DropdownMenuPrimitive.Content>
@@ -39,6 +41,8 @@ const DropdownContent = forwardRef<
 	</DropdownMenuPrimitive.Content>
 ));
 
+DropdownContent.displayName = DropdownMenuPrimitive.Content.displayName;
+
 const DropdownItem = forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Item>,
 	React.ComponentProps<typeof DropdownMenuPrimitive.Item>
@@ -55,6 +59,8 @@ const DropdownItem = forwardRef<
 	</DropdownMenuPrimitive.Item>
 ));
 
+DropdownItem.displayName = DropdownMenuPrimitive.Item.displayName;
+
 const DropdownSeparator = forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.Separator>,
 	React.ComponentProps<typeof DropdownMenuPrimitive.Separator>
@@ -67,6 +73,8 @@ const DropdownSeparator = forwardRef<
 		{children}
 	</DropdownMenuPrimitive.Separator>
 ));
+
+DropdownSeparator.displayName = DropdownMenuPrimitive.Separator.displayName;
 
 const DropdownSub = DropdownMenuPrimitive.Sub;
 
@@ -86,6 +94,8 @@ const DropdownSubTrigger = forwardRef<
 	</DropdownMenuPrimitive.SubTrigger>
 ));
 
+DropdownSubTrigger.displayName = DropdownMenuPrimitive.SubTrigger.displayName;
+
 const DropdownSubContent = forwardRef<
 	React.ElementRef<typeof DropdownMenuPrimitive.SubContent>,
 	React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>
@@ -102,6 +112,8 @@ const DropdownSubContent = forwardRef<
 		{children}
 	</DropdownMenuPrimitive.SubContent>
 ));
+
+DropdownSubContent.displayName = DropdownMenuPrimitive.SubContent.displayName;
 
 export {
 	DropdownRoot,

@@ -22,6 +22,8 @@ const CheckboxRoot = forwardRef<
 	</CheckboxPrimitive.Root>
 ));
 
+CheckboxRoot.displayName = CheckboxPrimitive.Root.displayName;
+
 const CheckboxIndicator = forwardRef<
 	React.ElementRef<typeof CheckboxPrimitive.Indicator>,
 	React.ComponentProps<typeof CheckboxPrimitive.Indicator>
@@ -30,5 +32,7 @@ const CheckboxIndicator = forwardRef<
 		{children || <BsCheckLg />}
 	</CheckboxPrimitive.Indicator>
 ));
+
+CheckboxIndicator.displayName = CheckboxPrimitive.Indicator.displayName;
 
 export { CheckboxRoot, CheckboxIndicator };

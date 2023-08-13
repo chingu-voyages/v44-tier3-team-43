@@ -17,6 +17,8 @@ const AlertDialogTrigger = forwardRef<
 	</AlertDialogPrimitive.Trigger>
 ));
 
+AlertDialogTrigger.displayName = AlertDialogPrimitive.Trigger.displayName;
+
 const AlertDialogOverlay = forwardRef<
 	React.ElementRef<typeof AlertDialogPrimitive.Overlay>,
 	React.ComponentProps<typeof AlertDialogPrimitive.Overlay>
@@ -32,6 +34,8 @@ const AlertDialogOverlay = forwardRef<
 		{children}
 	</AlertDialogPrimitive.Overlay>
 ));
+
+AlertDialogOverlay.displayName = AlertDialogPrimitive.Overlay.displayName;
 
 const AlertDialogContent = forwardRef<
 	React.ElementRef<typeof AlertDialogPrimitive.Content>,
@@ -50,6 +54,8 @@ const AlertDialogContent = forwardRef<
 	</AlertDialogPrimitive.Content>
 ));
 
+AlertDialogContent.displayName = AlertDialogPrimitive.AlertDialogContent.displayName;
+
 const AlertDialogTitle = forwardRef<
 	React.ElementRef<typeof Heading>,
 	React.ComponentProps<typeof Heading>
@@ -61,6 +67,8 @@ const AlertDialogTitle = forwardRef<
 	</AlertDialogPrimitive.Title>
 ));
 
+AlertDialogTitle.displayName = AlertDialogPrimitive.Title.displayName;
+
 const AlertDialogDescription = forwardRef<
 	React.ElementRef<typeof AlertDialogPrimitive.Description>,
 	React.ComponentProps<typeof AlertDialogPrimitive.Description>
@@ -69,6 +77,8 @@ const AlertDialogDescription = forwardRef<
 		{children}
 	</AlertDialogPrimitive.Description>
 ));
+
+AlertDialogDescription.displayName = AlertDialogPrimitive.Description.displayName;
 
 const AlertDialogCancel = forwardRef<
 	React.ElementRef<typeof Button>,
@@ -81,6 +91,8 @@ const AlertDialogCancel = forwardRef<
 	</AlertDialogPrimitive.Cancel>
 ));
 
+AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
+
 const AlertDialogAction = forwardRef<
 	React.ElementRef<typeof Button>,
 	React.ComponentProps<typeof Button>
@@ -91,6 +103,8 @@ const AlertDialogAction = forwardRef<
 		</Button>
 	</AlertDialogPrimitive.Action>
 ));
+
+AlertDialogAction.displayName = AlertDialogPrimitive.Action.displayName;
 
 export {
 	AlertDialogRoot,

@@ -36,4 +36,6 @@ const NewQuizDialogOpener = forwardRef<HTMLAnchorElement, IProps>(
 	}
 );
 
+NewQuizDialogOpener.displayName = "NewQuizDialogOpener";
+
 export default NewQuizDialogOpener;

@@ -24,6 +24,8 @@ const DialogTrigger = forwardRef<
 	</DialogPrimitive.Trigger>
 ));
 
+DialogTrigger.displayName = DialogPrimitive.Trigger.displayName;
+
 const DialogOverlay = forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Overlay>,
 	React.ComponentProps<typeof DialogPrimitive.Overlay>
@@ -39,6 +41,8 @@ const DialogOverlay = forwardRef<
 		{children}
 	</DialogPrimitive.Overlay>
 ));
+
+DialogOverlay.displayName = DialogPrimitive.Overlay.displayName;
 
 const DialogContent = forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Content>,
@@ -57,6 +61,8 @@ const DialogContent = forwardRef<
 	</DialogPrimitive.Content>
 ));
 
+DialogContent.displayName = DialogPrimitive.Content.displayName;
+
 const DialogTitle = forwardRef<
 	React.ElementRef<typeof Heading>,
 	React.ComponentProps<typeof Heading>
@@ -74,6 +80,8 @@ const DialogTitle = forwardRef<
 	</DialogPrimitive.Title>
 ));
 
+DialogTitle.displayName = DialogPrimitive.Title.displayName;
+
 const DialogDescription = forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Description>,
 	React.ComponentProps<typeof DialogPrimitive.Description>
@@ -82,6 +90,8 @@ const DialogDescription = forwardRef<
 		{children}
 	</DialogPrimitive.Description>
 ));
+
+DialogDescription.displayName = DialogPrimitive.Description.displayName;
 
 const DialogClose = forwardRef<
 	React.ElementRef<typeof DialogPrimitive.Close>,
@@ -98,6 +108,8 @@ const DialogClose = forwardRef<
 		{children || <IoMdClose className="w-6 h-6" />}
 	</DialogPrimitive.Close>
 ));
+
+DialogClose.displayName = DialogPrimitive.Close.displayName;
 
 export {
 	DialogRoot,

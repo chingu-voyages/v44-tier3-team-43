@@ -13,7 +13,7 @@ import { BiErrorCircle } from "react-icons/bi";
 const ManageQuestions = () => {
 	const pathname = usePathname();
 	const { quizId } = useParams();
-	const { data: questions, status } = useQuestions(quizId);
+	const { data: questions, status } = useQuestions(quizId as string);
 
 	return (
 		<>
@@ -59,7 +59,7 @@ const ManageQuestions = () => {
 									/>
 								</div>
 								<Heading size="2xl" as="h3">
-									There's nothing here yet...
+									There&apos;s nothing here yet...
 								</Heading>
 							</div>
 						)}

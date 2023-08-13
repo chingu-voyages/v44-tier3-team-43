@@ -68,7 +68,7 @@ const QuizSearch = () => {
 						</div>
 						<div>
 							<Heading size="3xl" as="h3">
-								We couldn't find anything...
+								We couldn&apos;t find anything...
 							</Heading>
 							<p className="mt-2 lg:mt-4 lg:text-lg">
 								Try a different search query or category

@@ -28,6 +28,8 @@ const SelectTrigger = forwardRef<
 	</SelectPrimitive.Trigger>
 ));
 
+SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
+
 const SelectValue = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Value>,
 	React.ComponentProps<typeof SelectPrimitive.Value>
@@ -36,6 +38,8 @@ const SelectValue = forwardRef<
 		{children}
 	</SelectPrimitive.Value>
 ));
+
+SelectValue.displayName = SelectPrimitive.Value.displayName;
 
 const SelectIcon = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Icon>,
@@ -57,6 +61,8 @@ const SelectIcon = forwardRef<
 	</SelectPrimitive.Icon>
 ));
 
+SelectIcon.displayName = SelectPrimitive.Icon.displayName;
+
 const SelectContent = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Content>,
 	React.ComponentProps<typeof SelectPrimitive.Content>
@@ -76,6 +82,8 @@ const SelectContent = forwardRef<
 	</SelectPrimitive.Content>
 ));
 
+SelectContent.displayName = SelectPrimitive.Content.displayName;
+
 const SelectViewport = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Viewport>,
 	React.ComponentProps<typeof SelectPrimitive.Viewport>
@@ -88,6 +96,8 @@ const SelectViewport = forwardRef<
 		{children}
 	</SelectPrimitive.Viewport>
 ));
+
+SelectViewport.displayName = SelectPrimitive.Viewport.displayName;
 
 const SelectItem = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Item>,
@@ -108,6 +118,8 @@ const SelectItem = forwardRef<
 	</SelectPrimitive.Item>
 ));
 
+SelectItem.displayName = SelectPrimitive.Item.displayName;
+
 const SelectItemText = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ItemText>,
 	React.ComponentProps<typeof SelectPrimitive.ItemText>
@@ -116,6 +128,8 @@ const SelectItemText = forwardRef<
 		{children}
 	</SelectPrimitive.ItemText>
 ));
+
+SelectItemText.displayName = SelectPrimitive.ItemText.displayName;
 
 const SelectScrollUpButton = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
@@ -133,6 +147,8 @@ const SelectScrollUpButton = forwardRef<
 	</SelectPrimitive.ScrollUpButton>
 ));
 
+SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName;
+
 const SelectScrollDownButton = forwardRef<
 	React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
 	React.ComponentProps<typeof SelectPrimitive.ScrollDownButton>
@@ -148,6 +164,8 @@ const SelectScrollDownButton = forwardRef<
 		{children || <BsChevronDown className="w-3 h-3" />}
 	</SelectPrimitive.ScrollDownButton>
 ));
+
+SelectScrollDownButton.displayName = SelectPrimitive.ScrollDownButton.displayName;
 
 export {
 	SelectRoot,

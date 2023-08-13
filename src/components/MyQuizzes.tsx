@@ -43,7 +43,7 @@ const MyQuizzes = () => {
 						</div>
 						<div>
 							<Heading size="3xl" as="h3">
-								There's nothing here yet...
+								There&apos;s nothing here yet...
 							</Heading>
 							<p className="mt-2 lg:mt-4 lg:text-lg">
 								Start creating quizzes to see them here

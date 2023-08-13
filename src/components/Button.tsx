@@ -33,14 +33,14 @@ export const buttonVariants = cva(
 	}
 );
 
-interface IProps
+export interface IButtonProps
 	extends ButtonHTMLAttributes<HTMLButtonElement>,
 		VariantProps<typeof buttonVariants> {
 	isLoading?: boolean;
 	showLoadingIcon?: boolean;
 }
 
-const Button = forwardRef<HTMLButtonElement, IProps>(
+const Button = forwardRef<HTMLButtonElement, IButtonProps>(
 	(
 		{
 			className,
@@ -66,5 +66,7 @@ const Button = forwardRef<HTMLButtonElement, IProps>(
 		</button>
 	)
 );
+
+Button.displayName = "Button";
 
 export default Button;
