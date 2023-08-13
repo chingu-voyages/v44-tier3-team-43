@@ -1,7 +1,34 @@
 import Heading from "@/components/Heading";
 import Questions from "@/components/Questions";
 import { getQuestions } from "@/utils/fetchers";
+import { Metadata, ResolvingMetadata } from "next";
 import Image from "next/image";
+
+export const generateMetadata = async (
+	_: any,
+	parent: ResolvingMetadata
+): Promise<Metadata> => {
+	const { openGraph, twitter } = await parent;
+	const title = "Play";
+
+	return {
+		title,
+		openGraph: {
+			...openGraph,
+			title,
+			url: openGraph?.url || undefined
+		},
+		twitter: {
+			...twitter,
+			title,
+			site: twitter?.site || undefined,
+			siteId: twitter?.siteId || undefined,
+			creator: twitter?.creator || undefined,
+			creatorId: twitter?.creatorId || undefined,
+			description: twitter?.description || undefined
+		}
+	};
+};
 
 const Page = async ({ params: { quizId } }: { params: { quizId: string } }) => {
 	const questions = await getQuestions(quizId);

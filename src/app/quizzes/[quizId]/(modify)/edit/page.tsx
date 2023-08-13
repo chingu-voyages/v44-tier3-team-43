@@ -1,6 +1,36 @@
 import EditQuizForm from "@/components/EditQuizForm";
 import Heading from "@/components/Heading";
 import { getQuiz } from "@/utils/fetchers";
+import { Metadata, ResolvingMetadata } from "next";
+
+export const generateMetadata = async (
+	_: any,
+	parent: ResolvingMetadata
+): Promise<Metadata> => {
+	const { openGraph, twitter } = await parent;
+	const title = "Edit";
+	const description = "Customize and edit your quiz to make it even better!";
+
+	return {
+		title,
+		description,
+		openGraph: {
+			...openGraph,
+			title,
+			description,
+			url: openGraph?.url || undefined
+		},
+		twitter: {
+			...twitter,
+			title,
+			site: twitter?.site || undefined,
+			siteId: twitter?.siteId || undefined,
+			creator: twitter?.creator || undefined,
+			creatorId: twitter?.creatorId || undefined,
+			description
+		}
+	};
+};
 
 const Page = async ({ params: { quizId } }: { params: { quizId: string } }) => {
 	const quiz = await getQuiz(quizId);

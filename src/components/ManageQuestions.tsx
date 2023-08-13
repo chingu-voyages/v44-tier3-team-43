@@ -13,7 +13,7 @@ import { BiErrorCircle } from "react-icons/bi";
 const ManageQuestions = () => {
 	const pathname = usePathname();
 	const { quizId } = useParams();
-	const { data: questions, status } = useQuestions(quizId);
+	const { data: questions, status } = useQuestions(quizId as string);
 
 	return (
 		<>
