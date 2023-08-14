@@ -3,6 +3,8 @@ import generateZodMessage from "@/utils/generateZodMessage";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+export const dynamic = "force-dynamic";
+
 export const GET = async () => {
 	try {
 		const categories = await prisma.category.findMany({

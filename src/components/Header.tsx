@@ -60,7 +60,9 @@ const Header = () => (
 					<Search />
 				</Suspense>
 				<Suspense
-					fallback={<div className="w-9 h-9 rounded-full bg-light-grey"></div>}
+					fallback={
+						<div className="hidden lg:block w-9 h-9 rounded-full bg-light-grey"></div>
+					}
 				>
 					<DesktopMenuAuth />
 				</Suspense>

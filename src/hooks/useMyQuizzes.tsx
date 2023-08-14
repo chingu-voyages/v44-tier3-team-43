@@ -9,11 +9,8 @@ const useMyQuizzes = () =>
 				page: pageParam,
 				perPage: 20
 			}),
-		getNextPageParam: (lastPage, pages) => {
-			if (lastPage.length === 20) {
-				return pages.length + 1;
-			}
-		}
+		getNextPageParam: (lastPage, pages) =>
+			lastPage && lastPage.length === 20 ? pages.length + 1 : undefined
 	});
 
 export default useMyQuizzes;

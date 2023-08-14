@@ -38,11 +38,11 @@ const MobileMenu = () => (
 						</Link>
 					</DropdownItem>
 				))}
-				<DropdownItem asChild>
-					<Suspense fallback={<a>New Quiz</a>}>
+				<Suspense fallback={<a>New Quiz</a>}>
+					<DropdownItem asChild>
 						<NewQuizDialogOpener>New Quiz</NewQuizDialogOpener>
-					</Suspense>
-				</DropdownItem>
+					</DropdownItem>
+				</Suspense>
 				<DropdownSub>
 					<DropdownSubTrigger className="pl-4 -ml-4 text-sm">
 						<BsChevronLeft
