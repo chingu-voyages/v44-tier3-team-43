@@ -11,7 +11,7 @@ import { BiErrorCircle } from "react-icons/bi";
 
 const MyQuizzes = () => {
 	const { data, status, fetchNextPage, hasNextPage } = useMyQuizzes();
-	const quizzes = data?.pages.reduce((acc, page) => [...acc, ...page]);
+	const quizzes = data?.pages?.reduce((acc, page) => [...acc, ...page], []);
 
 	return (
 		<>
