@@ -44,7 +44,7 @@ const AlertDialogContent = forwardRef<
 	<AlertDialogPrimitive.Content
 		className={twclsx(
 			"fixed top-1/2 left-1/2 -translate-y-1/2 -translate-x-1/2 p-5",
-			"bg-custom-black rounded-lg z-50 shadow-md",
+			"max-w-[36rem] w-full bg-custom-black rounded-lg z-50 shadow-md select-all",
 			className
 		)}
 		ref={ref}
