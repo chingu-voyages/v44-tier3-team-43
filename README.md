@@ -27,12 +27,12 @@ You can check out a live demo 👉[here](https://quizipy.vercel.app)👈.
 
 ## 🔥 Features
 
--   Categories
--   CRUD operations with quizzes and questions
--   react-hook-form and API routes validations using Zod
--   Image uploading using ImageKit.io
 -   Authentication using NextAuth.js
+-   CRUD operations for quizzes and questions
+-   Image uploading using Imagekit.io
 -   Search functionality
+-   Play mode
+-   Validations using Zod
 -   Dynamic metadata
 
 ## 🔧 Technologies
@@ -45,57 +45,46 @@ You can check out a live demo 👉[here](https://quizipy.vercel.app)👈.
 
 ## 🔌 Installation
 
--   Clone this repo
+1. Clone this repo
 
 ```bash
-git clone https://github.com/K0D0D/portfolio.git
+git clone https://github.com/chingu-voyages/v44-tier3-team-43.git
 ```
 
--   Go to the project directory
+2. Go to the project directory
 
 ```bash
-cd portfolio
+cd v44-tier3-team-43
 ```
 
--   Install dependencies
+3. Install npm dependencies
 
 ```bash
-npm i && cd /studio && sanity install
+npm i
 ```
 
--   add the Sanity CMS Project ID and Dataset to the .env.local file
-
-```bash
-NEXT_PUBLIC_SANITY_PROJECT_ID=YOUR_SANITY_PROJECT_ID
-NEXT_PUBLIC_SANITY_DATASET=YOUR_SANITY_DATASET
-```
+4. Copy .env.example to .env.local and update the variables
 
 ## 💻 Usage
 
-Project directory
-
--   start the server
+-   Start the development server
 
 ```bash
-npm start
+npm run dev
 ```
 
--   build the project
+-   Create a production build
 
 ```bash
 npm run build
 ```
 
-Studio directory
-
--   run the studio server
+-   Start the production server
 
 ```bash
-sanity start
+npm start
 ```
 
--   build the studio
+## 🔑 License
 
-```bash
-
-```
+This project is licensed under the [MIT License](https://github.com/chingu-voyages/v44-tier3-team-43/blob/main/LICENSE.md).
