@@ -38,6 +38,9 @@ export const metadata: Metadata = {
 			template: `%s | ${title}`
 		},
 		description
+	},
+	verification: {
+		google: process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION
 	}
 };
 
