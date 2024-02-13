@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import { Suspense } from "react";
 import { baseUrl, openGraph, twitter } from "@/utils/sharedMetadata";
 import "react-toastify/dist/ReactToastify.css";
+import Heading from "@/components/Heading";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -52,16 +53,20 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => (
 				inter.className
 			)}
 		>
-			<Providers>
-				<Header />
-				<Suspense fallback={<></>}>
-					<NewQuizDialog />
-				</Suspense>
-				<main className="mt-28 md:mt-40 flex-1 container flex flex-col">
-					{children}
-				</main>
-				<Footer />
-			</Providers>
+			{process.env.NEXT_PUBLIC_APP_URL ? (
+				<Providers>
+					<Header />
+					<Suspense fallback={<></>}>
+						<NewQuizDialog />
+					</Suspense>
+					<main className="mt-28 md:mt-40 flex-1 container flex flex-col">
+						{children}
+					</main>
+					<Footer />
+				</Providers>
+			) : (
+				<Heading size="3xl">Base URL isn&apos;t set</Heading>
+			)}
 		</body>
 	</html>
 );
