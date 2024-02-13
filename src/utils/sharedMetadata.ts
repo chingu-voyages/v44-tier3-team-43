@@ -1,4 +1,6 @@
-export const baseUrl = new URL(process.env.NEXT_PUBLIC_APP_URL || "");
+export const baseUrl = process.env.NEXT_PUBLIC_APP_URL
+	? new URL(process.env.NEXT_PUBLIC_APP_URL)
+	: undefined;
 
 export const image = "/app-image.png";
 
